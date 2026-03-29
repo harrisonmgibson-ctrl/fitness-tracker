@@ -2,8 +2,10 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { getProfile } from './lib/storage';
 import AppShell from './components/layout/AppShell';
 import OnboardingPage from './components/onboarding/OnboardingPage';
+import TodayPage from './components/today/TodayPage';
 import DiaryPage from './components/diary/DiaryPage';
-import DashboardPage from './components/dashboard/DashboardPage';
+import ProgressPage from './components/progress/ProgressPage';
+import MorePage from './components/more/MorePage';
 import ProfilePage from './components/profile/ProfilePage';
 
 function RequireProfile({ children }) {
@@ -16,10 +18,12 @@ export default function App() {
       <Routes>
         <Route path="/setup" element={<OnboardingPage />} />
         <Route element={<AppShell />}>
-          <Route path="/" element={<Navigate to="/diary" replace />} />
+          <Route path="/" element={<RequireProfile><TodayPage /></RequireProfile>} />
           <Route path="/diary" element={<RequireProfile><DiaryPage /></RequireProfile>} />
-          <Route path="/dashboard" element={<RequireProfile><DashboardPage /></RequireProfile>} />
+          <Route path="/progress" element={<RequireProfile><ProgressPage /></RequireProfile>} />
+          <Route path="/more" element={<RequireProfile><MorePage /></RequireProfile>} />
           <Route path="/profile" element={<RequireProfile><ProfilePage /></RequireProfile>} />
+          <Route path="/dashboard" element={<Navigate to="/progress" replace />} />
         </Route>
       </Routes>
     </BrowserRouter>

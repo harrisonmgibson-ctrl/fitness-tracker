@@ -16,21 +16,21 @@ export default function MealSection({ mealType, entries, onAdd, onRemove }) {
   const total = sumEntries(mealEntries);
 
   return (
-    <div className="mb-4">
-      <div className="flex justify-between items-center mb-1">
-        <h2 className="font-semibold text-gray-300">{MEAL_LABELS[mealType]}</h2>
-        <span className="text-xs text-gray-500">{total.calories} kcal</span>
-      </div>
-      <div className="bg-gray-900 rounded-xl overflow-hidden">
+    <div className="mb-3">
+      <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+        <div className="flex justify-between items-center px-4 py-3 border-b border-gray-50 sticky top-0 bg-white z-10">
+          <h2 className="font-semibold text-gray-800">{MEAL_LABELS[mealType]}</h2>
+          <span className="text-xs text-gray-400">{total.calories} kcal</span>
+        </div>
         {mealEntries.length === 0 && (
-          <p className="text-xs text-gray-600 px-3 py-2">No foods logged</p>
+          <p className="text-xs text-gray-400 px-4 py-2">No foods logged</p>
         )}
         {mealEntries.map(entry => (
           <DiaryEntryRow key={entry.id} entry={entry} onRemove={onRemove} />
         ))}
         <button
           onClick={() => setShowModal(true)}
-          className="w-full text-left px-3 py-2 text-sm text-emerald-500 hover:text-emerald-400 transition-colors">
+          className="w-full text-left px-4 py-2.5 text-sm text-[#0066EE] hover:bg-gray-50 transition-colors font-medium">
           + Add Food
         </button>
       </div>

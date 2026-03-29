@@ -6,8 +6,8 @@ const MACROS = [
 
 export default function MacroBreakdown({ totals, targets }) {
   return (
-    <div className="bg-gray-900 rounded-2xl p-4">
-      <h2 className="text-sm font-medium text-gray-400 mb-3">Macros</h2>
+    <div className="bg-white rounded-2xl shadow-sm p-4">
+      <h2 className="text-sm font-medium text-gray-500 mb-3">Macros</h2>
       <div className="space-y-3">
         {MACROS.map(m => {
           const consumed = totals[m.key] || 0;
@@ -16,10 +16,10 @@ export default function MacroBreakdown({ totals, targets }) {
           return (
             <div key={m.key}>
               <div className="flex justify-between text-xs mb-1">
-                <span className="text-gray-300">{m.label}</span>
+                <span className="text-gray-700">{m.label}</span>
                 <span className="text-gray-400">{consumed}g / {target}g</span>
               </div>
-              <div className="w-full bg-gray-800 rounded-full h-2">
+              <div className="w-full bg-gray-100 rounded-full h-2">
                 <div className={`h-2 rounded-full ${m.color} transition-all`} style={{ width: `${pct}%` }} />
               </div>
             </div>

@@ -19,17 +19,17 @@ export default function OnboardingPage() {
 
   function handleSubmit() {
     setProfile(form);
-    navigate('/diary');
+    navigate('/');
   }
 
   return (
-    <div className="min-h-screen flex flex-col justify-center py-10">
+    <div className="min-h-screen bg-[#F4F4F4] flex flex-col justify-center py-10 px-4 max-w-lg mx-auto">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-white mb-1">Set Up Your Profile</h1>
-        <p className="text-gray-400 text-sm">Step {step + 1} of {STEPS.length} — {STEPS[step]}</p>
+        <h1 className="text-2xl font-bold text-gray-900 mb-1">Set Up Your Profile</h1>
+        <p className="text-gray-500 text-sm">Step {step + 1} of {STEPS.length} — {STEPS[step]}</p>
         <div className="flex gap-1 mt-3">
           {STEPS.map((_, i) => (
-            <div key={i} className={`h-1 flex-1 rounded-full transition-colors ${i <= step ? 'bg-emerald-500' : 'bg-gray-700'}`} />
+            <div key={i} className={`h-1 flex-1 rounded-full transition-colors ${i <= step ? 'bg-[#0066EE]' : 'bg-gray-200'}`} />
           ))}
         </div>
       </div>
