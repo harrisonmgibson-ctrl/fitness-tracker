@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import foods from '../../data/foodDatabase';
 import preMeals from '../../data/mealDatabase';
 import { useSavedMeals } from '../../hooks/useSavedMeals';
+import MealCustomiser from './MealCustomiser';
 
 const TABS = [
   { id: 'build', label: 'Build Meal' },
@@ -77,6 +78,7 @@ export default function FoodSearchModal({ mealType, onAdd, onClose }) {
 
   // ── My Meals state ───────────────────────────────────────────────────────────
   const [mealQuery, setMealQuery] = useState('');
+  const [customising, setCustomising] = useState(null); // meal being customised
 
   function mealFilter(list) {
     if (!mealQuery) return list;
@@ -263,49 +265,63 @@ export default function FoodSearchModal({ mealType, onAdd, onClose }) {
 
         {/* ── MY MEALS ────────────────────────────────────────────────────────── */}
         {activeTab === 'mymeals' && (
-          <div className="flex flex-col flex-1 overflow-hidden">
-            <div className="p-4 flex-shrink-0">
-              <input type="text" value={mealQuery} onChange={e => setMealQuery(e.target.value)}
-                placeholder="Search meals..."
-                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0066EE] text-sm"
-              />
-            </div>
-            <div className="overflow-y-auto flex-1 px-4 pb-4 space-y-4">
+          customising ? (
+            <MealCustomiser
+              meal={customising}
+              onLog={(food, qty) => { onAdd(food, qty); setCustomising(null); }}
+              onSave={saveToMyMeals}
+              onBack={() => setCustomising(null)}
+            />
+          ) : (
+            <div className="flex flex-col flex-1 overflow-hidden">
+              <div className="p-4 flex-shrink-0">
+                <input type="text" value={mealQuery} onChange={e => setMealQuery(e.target.value)}
+                  placeholder="Search meals..."
+                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0066EE] text-sm"
+                />
+              </div>
+              <div className="overflow-y-auto flex-1 px-4 pb-4 space-y-4">
 
-              {/* Saved meals */}
-              {savedMeals.length > 0 && (
-                <div>
-                  <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-2">My Saved Meals</p>
-                  <div className="space-y-2">
-                    {mealFilter(savedMeals).map(meal => (
-                      <MealRow key={meal.id} meal={meal} onAdd={() => addPreBuiltMeal(meal)}
-                        onDelete={() => removeMeal(meal.id)} showDelete />
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Pre-built meals grouped by category */}
-              {['Breakfast', 'Lunch', 'Dinner'].map(cat => {
-                const filtered = mealFilter(preMeals.filter(m => m.category === cat));
-                if (filtered.length === 0) return null;
-                return (
-                  <div key={cat}>
-                    <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-2">{cat}</p>
+                {/* Saved meals */}
+                {savedMeals.length > 0 && (
+                  <div>
+                    <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-2">My Saved Meals</p>
                     <div className="space-y-2">
-                      {filtered.map(meal => (
-                        <MealRow key={meal.id} meal={meal} onAdd={() => addPreBuiltMeal(meal)} />
+                      {mealFilter(savedMeals).map(meal => (
+                        <MealRow key={meal.id} meal={meal} onAdd={() => addPreBuiltMeal(meal)}
+                          onDelete={() => removeMeal(meal.id)} showDelete />
                       ))}
                     </div>
                   </div>
-                );
-              })}
+                )}
 
-              {savedMeals.length === 0 && mealFilter(preMeals).length === 0 && (
-                <p className="text-sm text-gray-400 text-center py-4">No meals found</p>
-              )}
+                {/* Pre-built meals grouped by category */}
+                {['Breakfast', 'Lunch', 'Dinner'].map(cat => {
+                  const filtered = mealFilter(preMeals.filter(m => m.category === cat));
+                  if (filtered.length === 0) return null;
+                  return (
+                    <div key={cat}>
+                      <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-2">{cat}</p>
+                      <div className="space-y-2">
+                        {filtered.map(meal => (
+                          <MealRow
+                            key={meal.id}
+                            meal={meal}
+                            onAdd={() => addPreBuiltMeal(meal)}
+                            onCustomise={meal.ingredients ? () => setCustomising(meal) : null}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+
+                {savedMeals.length === 0 && mealFilter(preMeals).length === 0 && (
+                  <p className="text-sm text-gray-400 text-center py-4">No meals found</p>
+                )}
+              </div>
             </div>
-          </div>
+          )
         )}
 
         {/* ── SEARCH ──────────────────────────────────────────────────────────── */}
@@ -406,23 +422,31 @@ export default function FoodSearchModal({ mealType, onAdd, onClose }) {
   );
 }
 
-function MealRow({ meal, onAdd, onDelete, showDelete }) {
+function MealRow({ meal, onAdd, onDelete, onCustomise, showDelete }) {
   return (
-    <div className="bg-gray-50 rounded-xl flex items-center justify-between px-3 py-2.5">
-      <div className="flex-1 min-w-0">
-        <p className="text-sm text-gray-900 truncate">{meal.name}</p>
-        <p className="text-xs text-gray-400">
-          {meal.calories} kcal · P {meal.proteinG}g · C {meal.carbsG}g · F {meal.fatG}g
-        </p>
-      </div>
-      <div className="flex items-center gap-1 ml-2">
-        {showDelete && (
-          <button onClick={onDelete} className="text-gray-300 hover:text-red-400 text-lg leading-none px-1">×</button>
-        )}
-        <button onClick={onAdd}
-          className="bg-[#0066EE] hover:bg-[#0052BE] text-white text-xs font-medium px-3 py-1.5 rounded-lg transition-colors">
-          Add
-        </button>
+    <div className="bg-gray-50 rounded-xl px-3 py-2.5">
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex-1 min-w-0">
+          <p className="text-sm text-gray-900 truncate">{meal.name}</p>
+          <p className="text-xs text-gray-400">
+            {meal.calories} kcal · P {meal.proteinG}g · C {meal.carbsG}g · F {meal.fatG}g
+          </p>
+        </div>
+        <div className="flex items-center gap-1 flex-shrink-0">
+          {showDelete && (
+            <button onClick={onDelete} className="text-gray-300 hover:text-red-400 text-lg leading-none px-1">×</button>
+          )}
+          {onCustomise && (
+            <button onClick={onCustomise}
+              className="border border-[#0066EE] text-[#0066EE] hover:bg-blue-50 text-xs font-medium px-2.5 py-1.5 rounded-lg transition-colors">
+              Customise
+            </button>
+          )}
+          <button onClick={onAdd}
+            className="bg-[#0066EE] hover:bg-[#0052BE] text-white text-xs font-medium px-3 py-1.5 rounded-lg transition-colors">
+            Add
+          </button>
+        </div>
       </div>
     </div>
   );
