@@ -3,6 +3,10 @@ const KEYS = {
   DIARY: 'ft_diary',
   WEIGHT_LOG: 'ft_weight_log',
   SAVED_MEALS: 'ft_saved_meals',
+  EXERCISE: 'ft_exercise',
+  WATER: 'ft_water',
+  WATER_GOAL: 'ft_water_goal',
+  REMINDER_DISMISSED: 'ft_reminder_dismissed',
 };
 
 function safeGet(key, fallback) {
@@ -59,4 +63,46 @@ export function getSavedMeals() {
 
 export function setSavedMeals(meals) {
   safeSet(KEYS.SAVED_MEALS, meals);
+}
+
+// Exercise — { 'YYYY-MM-DD': [{ id, name, caloriesBurned }] }
+export function getExerciseDay(isoDate) {
+  const all = safeGet(KEYS.EXERCISE, {});
+  return all[isoDate] || [];
+}
+
+export function setExerciseDay(isoDate, entries) {
+  const all = safeGet(KEYS.EXERCISE, {});
+  all[isoDate] = entries;
+  safeSet(KEYS.EXERCISE, all);
+}
+
+// Water — { 'YYYY-MM-DD': count }
+export function getWaterDay(isoDate) {
+  const all = safeGet(KEYS.WATER, {});
+  return all[isoDate] ?? 0;
+}
+
+export function setWaterDay(isoDate, count) {
+  const all = safeGet(KEYS.WATER, {});
+  all[isoDate] = count;
+  safeSet(KEYS.WATER, all);
+}
+
+// Water goal — number (default 8)
+export function getWaterGoal() {
+  return safeGet(KEYS.WATER_GOAL, 8);
+}
+
+export function setWaterGoal(n) {
+  safeSet(KEYS.WATER_GOAL, n);
+}
+
+// Reminder dismissed — ISO date string
+export function getReminderDismissed() {
+  return safeGet(KEYS.REMINDER_DISMISSED, null);
+}
+
+export function setReminderDismissed(isoDate) {
+  safeSet(KEYS.REMINDER_DISMISSED, isoDate);
 }

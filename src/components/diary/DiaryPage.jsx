@@ -8,12 +8,20 @@ import MealSection from './MealSection';
 
 const MEALS = ['breakfast', 'lunch', 'dinner', 'snack'];
 
+function getYesterday() {
+  const d = new Date();
+  d.setDate(d.getDate() - 1);
+  return d.toISOString().slice(0, 10);
+}
+
 export default function DiaryPage() {
   const [date, setDate] = useState(toISODate());
-  const { entries, addEntry, removeEntry, dailyTotals } = useDiary(date);
+  const { entries, addEntry, removeEntry, copyFromDate, dailyTotals } = useDiary(date);
   const { profile } = useProfile();
   const goals = useGoals(profile);
 
+  const today = toISODate();
+  const isToday = date === today;
   const remaining = goals ? goals.calorieGoal - dailyTotals.calories : null;
   const over = remaining !== null && remaining < 0;
 
@@ -34,6 +42,15 @@ export default function DiaryPage() {
             {over ? `${Math.abs(remaining)} over` : `${remaining} left`}
           </p>
         </div>
+      )}
+
+      {/* Copy Yesterday button — only on today when diary is empty */}
+      {isToday && entries.length === 0 && (
+        <button
+          onClick={() => copyFromDate(getYesterday())}
+          className="w-full mb-3 flex items-center justify-center gap-2 bg-white rounded-2xl shadow-sm px-4 py-3 text-sm text-[#0066EE] font-medium hover:bg-gray-50 transition-colors border border-dashed border-[#0066EE]/30">
+          📋 Copy Yesterday's Meals
+        </button>
       )}
 
       {MEALS.map(meal => (

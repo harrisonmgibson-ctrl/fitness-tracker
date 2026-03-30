@@ -17,6 +17,7 @@ export function useDiary(date) {
       proteinG: Math.round(foodItem.proteinG * quantity * 10) / 10,
       carbsG: Math.round(foodItem.carbsG * quantity * 10) / 10,
       fatG: Math.round(foodItem.fatG * quantity * 10) / 10,
+      fiberG: Math.round((foodItem.fiberG || 0) * quantity * 10) / 10,
     };
     const updated = [...entries, newEntry];
     setDiaryDay(date, updated);
@@ -29,7 +30,15 @@ export function useDiary(date) {
     setEntries(updated);
   }
 
+  function copyFromDate(fromDate) {
+    const source = getDiaryDay(fromDate);
+    if (!source.length) return;
+    const copied = source.map(e => ({ ...e, id: crypto.randomUUID() }));
+    setDiaryDay(date, copied);
+    setEntries(copied);
+  }
+
   const dailyTotals = sumEntries(entries);
 
-  return { entries, addEntry, removeEntry, dailyTotals };
+  return { entries, addEntry, removeEntry, copyFromDate, dailyTotals };
 }

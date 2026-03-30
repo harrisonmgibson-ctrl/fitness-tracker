@@ -2,16 +2,19 @@ const MACROS = [
   { key: 'carbsG', label: 'Carbs', color: 'bg-yellow-400' },
   { key: 'proteinG', label: 'Protein', color: 'bg-blue-400' },
   { key: 'fatG', label: 'Fat', color: 'bg-orange-400' },
+  { key: 'fiberG', label: 'Fiber', color: 'bg-green-400' },
 ];
 
-export default function MacroBreakdown({ totals, targets }) {
+export default function MacroBreakdown({ totals, targets, fiberTarget }) {
+  const allTargets = { ...targets, fiberG: fiberTarget || 25 };
+
   return (
     <div className="bg-white rounded-2xl shadow-sm p-4">
       <h2 className="text-sm font-medium text-gray-500 mb-3">Macros</h2>
       <div className="space-y-3">
         {MACROS.map(m => {
-          const consumed = totals[m.key] || 0;
-          const target = targets[m.key] || 1;
+          const consumed = Math.round((totals[m.key] || 0) * 10) / 10;
+          const target = allTargets[m.key] || 1;
           const pct = Math.min((consumed / target) * 100, 100);
           return (
             <div key={m.key}>

@@ -1,4 +1,4 @@
-import { calcBMR, calcTDEE, calcCalorieGoal, calcMacroTargets } from '../lib/calculations';
+import { calcBMR, calcTDEE, calcCalorieGoal, calcMacroTargets, calcFiberTarget } from '../lib/calculations';
 
 export function useGoals(profile) {
   if (!profile) return null;
@@ -7,6 +7,7 @@ export function useGoals(profile) {
   const tdee = calcTDEE(bmr, profile.activityLevel);
   const calorieGoal = calcCalorieGoal(tdee, profile.weeklyGoalKg, profile.gender);
   const macroTargets = calcMacroTargets(calorieGoal);
+  const fiberTarget = calcFiberTarget(profile.gender);
 
-  return { bmr: Math.round(bmr), tdee: Math.round(tdee), calorieGoal, macroTargets };
+  return { bmr: Math.round(bmr), tdee: Math.round(tdee), calorieGoal, macroTargets, fiberTarget };
 }
