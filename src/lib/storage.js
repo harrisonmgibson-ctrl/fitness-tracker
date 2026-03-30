@@ -2,6 +2,7 @@ const KEYS = {
   PROFILE: 'ft_profile',
   DIARY: 'ft_diary',
   WEIGHT_LOG: 'ft_weight_log',
+  SAVED_MEALS: 'ft_saved_meals',
 };
 
 function safeGet(key, fallback) {
@@ -49,4 +50,13 @@ export function getWeightLog() {
 
 export function setWeightLog(log) {
   safeSet(KEYS.WEIGHT_LOG, log);
+}
+
+// Saved meals — array of { id, name, calories, proteinG, carbsG, fatG }
+export function getSavedMeals() {
+  return safeGet(KEYS.SAVED_MEALS, []);
+}
+
+export function setSavedMeals(meals) {
+  safeSet(KEYS.SAVED_MEALS, meals);
 }
