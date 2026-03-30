@@ -1,27 +1,40 @@
 import { useState } from 'react';
-import { getWaterDay, setWaterDay, getWaterGoal, setWaterGoal } from '../lib/storage';
+import {
+  getWaterDay, setWaterDay,
+  getWaterGoal, setWaterGoal,
+  getCupSizeMl, setCupSizeMl,
+  getBottleSizeMl, setBottleSizeMl,
+} from '../lib/storage';
 
 export function useWater(date) {
-  const [count, setCount] = useState(() => getWaterDay(date));
-  const [goal, setGoalState] = useState(() => getWaterGoal());
+  const [totalMl, setTotalMl] = useState(() => getWaterDay(date));
+  const [goalMl, setGoalMlState] = useState(() => getWaterGoal());
+  const [cupSizeMl, setCupSizeMlState] = useState(() => getCupSizeMl());
+  const [bottleSizeMl, setBottleSizeMlState] = useState(() => getBottleSizeMl());
 
-  function increment() {
-    const next = Math.min(count + 1, 30);
+  function addMl(n) {
+    const next = Math.max(0, totalMl + n);
     setWaterDay(date, next);
-    setCount(next);
+    setTotalMl(next);
   }
 
-  function decrement() {
-    const next = Math.max(count - 1, 0);
-    setWaterDay(date, next);
-    setCount(next);
-  }
-
-  function setGoal(n) {
-    const val = Math.max(1, Math.min(30, Number(n)));
+  function setGoalMl(n) {
+    const val = Math.max(100, Math.min(10000, Number(n)));
     setWaterGoal(val);
-    setGoalState(val);
+    setGoalMlState(val);
   }
 
-  return { count, goal, increment, decrement, setGoal };
+  function updateCupSize(n) {
+    const val = Math.max(50, Math.min(2000, Number(n)));
+    setCupSizeMl(val);
+    setCupSizeMlState(val);
+  }
+
+  function updateBottleSize(n) {
+    const val = Math.max(100, Math.min(5000, Number(n)));
+    setBottleSizeMl(val);
+    setBottleSizeMlState(val);
+  }
+
+  return { totalMl, goalMl, cupSizeMl, bottleSizeMl, addMl, setGoalMl, setCupSizeMl: updateCupSize, setBottleSizeMl: updateBottleSize };
 }

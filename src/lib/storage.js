@@ -7,6 +7,8 @@ const KEYS = {
   WATER: 'ft_water',
   WATER_GOAL: 'ft_water_goal',
   REMINDER_DISMISSED: 'ft_reminder_dismissed',
+  CUP_SIZE_ML: 'ft_cup_size_ml',
+  BOTTLE_SIZE_ML: 'ft_bottle_size_ml',
 };
 
 function safeGet(key, fallback) {
@@ -77,25 +79,43 @@ export function setExerciseDay(isoDate, entries) {
   safeSet(KEYS.EXERCISE, all);
 }
 
-// Water — { 'YYYY-MM-DD': count }
+// Water — { 'YYYY-MM-DD': totalMl }
 export function getWaterDay(isoDate) {
   const all = safeGet(KEYS.WATER, {});
   return all[isoDate] ?? 0;
 }
 
-export function setWaterDay(isoDate, count) {
+export function setWaterDay(isoDate, totalMl) {
   const all = safeGet(KEYS.WATER, {});
-  all[isoDate] = count;
+  all[isoDate] = totalMl;
   safeSet(KEYS.WATER, all);
 }
 
-// Water goal — number (default 8)
+// Water goal — number in ml (default 2000)
 export function getWaterGoal() {
-  return safeGet(KEYS.WATER_GOAL, 8);
+  return safeGet(KEYS.WATER_GOAL, 2000);
 }
 
 export function setWaterGoal(n) {
   safeSet(KEYS.WATER_GOAL, n);
+}
+
+// Cup size — ml (default 250)
+export function getCupSizeMl() {
+  return safeGet(KEYS.CUP_SIZE_ML, 250);
+}
+
+export function setCupSizeMl(n) {
+  safeSet(KEYS.CUP_SIZE_ML, n);
+}
+
+// Bottle size — ml (default 500)
+export function getBottleSizeMl() {
+  return safeGet(KEYS.BOTTLE_SIZE_ML, 500);
+}
+
+export function setBottleSizeMl(n) {
+  safeSet(KEYS.BOTTLE_SIZE_ML, n);
 }
 
 // Reminder dismissed — ISO date string

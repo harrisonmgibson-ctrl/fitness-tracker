@@ -137,7 +137,7 @@ export default function FoodSearchModal({ mealType, onAdd, onClose }) {
   return createPortal(
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/50" onClick={onClose}>
       <div
-        className="bg-white rounded-t-2xl w-full max-w-lg max-h-[90vh] flex flex-col"
+        className="bg-white rounded-t-2xl w-full max-w-lg h-[85vh] flex flex-col"
         onClick={e => e.stopPropagation()}>
 
         {/* Header */}

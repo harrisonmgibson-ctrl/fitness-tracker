@@ -2,67 +2,207 @@ import { useState } from 'react';
 import { useWater } from '../../hooks/useWater';
 
 export default function WaterCard({ date }) {
-  const { count, goal, increment, decrement, setGoal } = useWater(date);
+  const { totalMl, goalMl, cupSizeMl, bottleSizeMl, addMl, setGoalMl, setCupSizeMl, setBottleSizeMl } = useWater(date);
+
+  const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState('cup'); // 'cup' | 'bottle' | 'exact'
+  const [exactInput, setExactInput] = useState('');
+  const [editingCup, setEditingCup] = useState(false);
+  const [editingBottle, setEditingBottle] = useState(false);
+  const [cupInput, setCupInput] = useState('');
+  const [bottleInput, setBottleInput] = useState('');
   const [editingGoal, setEditingGoal] = useState(false);
   const [goalInput, setGoalInput] = useState('');
 
-  function handleGoalSave(e) {
-    e.preventDefault();
-    if (goalInput) setGoal(goalInput);
+  const pct = Math.min((totalMl / goalMl) * 100, 100);
+
+  function handleAdd() {
+    if (selected === 'cup') {
+      addMl(cupSizeMl);
+    } else if (selected === 'bottle') {
+      addMl(bottleSizeMl);
+    } else {
+      const n = parseInt(exactInput, 10);
+      if (!isNaN(n) && n > 0) addMl(n);
+      setExactInput('');
+    }
+    setOpen(false);
+  }
+
+  function saveCupSize() {
+    const n = parseInt(cupInput, 10);
+    if (!isNaN(n) && n > 0) setCupSizeMl(n);
+    setEditingCup(false);
+  }
+
+  function saveBottleSize() {
+    const n = parseInt(bottleInput, 10);
+    if (!isNaN(n) && n > 0) setBottleSizeMl(n);
+    setEditingBottle(false);
+  }
+
+  function saveGoal() {
+    const n = parseInt(goalInput, 10);
+    if (!isNaN(n) && n > 0) setGoalMl(n);
     setEditingGoal(false);
-    setGoalInput('');
   }
 
   return (
     <div className="bg-white rounded-2xl shadow-sm p-4">
-      <div className="flex items-center justify-between">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
           <span className="text-xl">💧</span>
           <div>
             <div className="flex items-center gap-1">
               <p className="text-sm font-semibold text-gray-800">Water</p>
               <button
-                onClick={() => { setEditingGoal(true); setGoalInput(String(goal)); }}
+                onClick={() => { setEditingGoal(true); setGoalInput(String(goalMl)); }}
                 className="text-gray-300 hover:text-gray-500 transition-colors text-xs leading-none">
                 ✎
               </button>
             </div>
             {editingGoal ? (
-              <form onSubmit={handleGoalSave} className="flex items-center gap-1 mt-0.5">
+              <div className="flex items-center gap-1 mt-0.5">
                 <input
                   type="number"
                   value={goalInput}
                   onChange={e => setGoalInput(e.target.value)}
-                  min="1" max="30"
-                  className="w-12 text-xs border border-gray-200 rounded px-1 py-0.5 focus:outline-none focus:ring-1 focus:ring-[#0066EE]"
+                  onBlur={saveGoal}
+                  onKeyDown={e => e.key === 'Enter' && saveGoal()}
+                  min="100" max="10000"
+                  className="w-16 text-xs border border-gray-200 rounded px-1 py-0.5 focus:outline-none focus:ring-1 focus:ring-[#0066EE]"
                   autoFocus
                 />
-                <button type="submit" className="text-xs text-[#0066EE] font-medium">Save</button>
-              </form>
+                <span className="text-xs text-gray-400">ml</span>
+                <button onClick={saveGoal} className="text-xs text-[#0066EE] font-medium">Save</button>
+              </div>
             ) : (
-              <p className="text-xs text-gray-400">{count} / {goal} glasses</p>
+              <p className="text-xs text-gray-400">{totalMl} / {goalMl} ml</p>
             )}
           </div>
         </div>
-        <div className="flex items-center gap-3">
-          <button
-            onClick={decrement}
-            className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 font-medium transition-colors">
-            −
-          </button>
-          <button
-            onClick={increment}
-            className="w-8 h-8 rounded-full bg-[#0066EE] hover:bg-[#0052BE] flex items-center justify-center text-white font-medium transition-colors">
-            +
-          </button>
-        </div>
+        <button
+          onClick={() => setOpen(o => !o)}
+          className="text-sm font-medium text-[#0066EE] border border-[#0066EE]/30 rounded-xl px-3 py-1.5 hover:bg-blue-50 transition-colors flex items-center gap-1">
+          + Log Water <span className="text-xs">{open ? '▲' : '▼'}</span>
+        </button>
       </div>
-      <div className="mt-3 w-full bg-gray-100 rounded-full h-1.5">
+
+      {/* Progress bar */}
+      <div className="w-full bg-gray-100 rounded-full h-2">
         <div
-          className="h-1.5 rounded-full bg-blue-400 transition-all"
-          style={{ width: `${Math.min((count / goal) * 100, 100)}%` }}
+          className="h-2 rounded-full transition-all"
+          style={{
+            width: `${pct}%`,
+            backgroundColor: pct >= 100 ? '#22C55E' : '#60A5FA',
+          }}
         />
       </div>
+
+      {/* Log panel */}
+      {open && (
+        <div className="mt-3 space-y-2">
+          {/* Cup option */}
+          <label className="flex items-center gap-3 cursor-pointer">
+            <input
+              type="radio" name="waterOption" value="cup"
+              checked={selected === 'cup'}
+              onChange={() => setSelected('cup')}
+              className="accent-[#0066EE]"
+            />
+            <span className="text-sm text-gray-700 flex-1">Cup</span>
+            {editingCup ? (
+              <div className="flex items-center gap-1">
+                <input
+                  type="number"
+                  value={cupInput}
+                  onChange={e => setCupInput(e.target.value)}
+                  onBlur={saveCupSize}
+                  onKeyDown={e => e.key === 'Enter' && saveCupSize()}
+                  min="50" max="2000"
+                  className="w-14 text-xs border border-gray-200 rounded px-1 py-0.5 focus:outline-none focus:ring-1 focus:ring-[#0066EE]"
+                  autoFocus
+                />
+                <span className="text-xs text-gray-400">ml</span>
+              </div>
+            ) : (
+              <div className="flex items-center gap-1">
+                <span className="text-xs text-gray-400">{cupSizeMl} ml</span>
+                <button
+                  onClick={e => { e.preventDefault(); setEditingCup(true); setCupInput(String(cupSizeMl)); }}
+                  className="text-gray-300 hover:text-gray-500 text-xs leading-none">
+                  ✎
+                </button>
+              </div>
+            )}
+          </label>
+
+          {/* Bottle option */}
+          <label className="flex items-center gap-3 cursor-pointer">
+            <input
+              type="radio" name="waterOption" value="bottle"
+              checked={selected === 'bottle'}
+              onChange={() => setSelected('bottle')}
+              className="accent-[#0066EE]"
+            />
+            <span className="text-sm text-gray-700 flex-1">Bottle</span>
+            {editingBottle ? (
+              <div className="flex items-center gap-1">
+                <input
+                  type="number"
+                  value={bottleInput}
+                  onChange={e => setBottleInput(e.target.value)}
+                  onBlur={saveBottleSize}
+                  onKeyDown={e => e.key === 'Enter' && saveBottleSize()}
+                  min="100" max="5000"
+                  className="w-14 text-xs border border-gray-200 rounded px-1 py-0.5 focus:outline-none focus:ring-1 focus:ring-[#0066EE]"
+                  autoFocus
+                />
+                <span className="text-xs text-gray-400">ml</span>
+              </div>
+            ) : (
+              <div className="flex items-center gap-1">
+                <span className="text-xs text-gray-400">{bottleSizeMl} ml</span>
+                <button
+                  onClick={e => { e.preventDefault(); setEditingBottle(true); setBottleInput(String(bottleSizeMl)); }}
+                  className="text-gray-300 hover:text-gray-500 text-xs leading-none">
+                  ✎
+                </button>
+              </div>
+            )}
+          </label>
+
+          {/* Exact ml option */}
+          <label className="flex items-center gap-3 cursor-pointer">
+            <input
+              type="radio" name="waterOption" value="exact"
+              checked={selected === 'exact'}
+              onChange={() => setSelected('exact')}
+              className="accent-[#0066EE]"
+            />
+            <span className="text-sm text-gray-700">Exact</span>
+            <div className="flex items-center gap-1 flex-1">
+              <input
+                type="number"
+                value={exactInput}
+                onChange={e => setExactInput(e.target.value)}
+                onFocus={() => setSelected('exact')}
+                placeholder="ml"
+                min="1"
+                className="flex-1 text-xs border border-gray-200 rounded px-2 py-0.5 focus:outline-none focus:ring-1 focus:ring-[#0066EE]"
+              />
+              <span className="text-xs text-gray-400">ml</span>
+            </div>
+          </label>
+
+          <button
+            onClick={handleAdd}
+            className="w-full bg-[#0066EE] hover:bg-[#0052BE] text-white rounded-xl py-2 text-sm font-medium transition-colors mt-1">
+            Add
+          </button>
+        </div>
+      )}
     </div>
   );
 }

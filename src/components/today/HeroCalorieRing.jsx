@@ -1,39 +1,50 @@
-import { RadialBarChart, RadialBar, ResponsiveContainer } from 'recharts';
-
 export default function HeroCalorieRing({ consumed, goal, exerciseCalories = 0 }) {
   const net = consumed - exerciseCalories;
-  const pct = Math.min((net / goal) * 100, 100);
   const over = net > goal;
   const remaining = goal - net;
 
-  const data = [
-    { name: 'background', value: 100, fill: '#E5E7EB' },
-    { name: 'consumed', value: Math.max(pct, 0), fill: over ? '#ef4444' : '#0066EE' },
-  ];
+  const totalLength = Math.PI * 85; // ≈ 267
+  const fillLength = Math.min(Math.max((net / goal), 0), 1) * totalLength;
+  const arcColor = over ? '#EF4444' : '#22C55E';
 
   return (
     <div className="bg-white rounded-2xl shadow-sm p-5">
-      <div className="relative h-52">
-        <ResponsiveContainer width="100%" height="100%">
-          <RadialBarChart
-            innerRadius="60%"
-            outerRadius="100%"
-            startAngle={210}
-            endAngle={-30}
-            data={data}
-            barSize={16}>
-            <RadialBar dataKey="value" cornerRadius={10} background={false} />
-          </RadialBarChart>
-        </ResponsiveContainer>
-        <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <p className={`text-4xl font-bold ${over ? 'text-red-500' : 'text-gray-900'}`}>
-            {over ? net - goal : Math.abs(remaining)}
-          </p>
-          <p className="text-sm text-gray-500 mt-1">
-            {over ? 'Calories Over' : 'Calories Remaining'}
-          </p>
-        </div>
-      </div>
+      <svg viewBox="0 0 200 120" className="w-full max-w-[260px] mx-auto block">
+        {/* Background arc */}
+        <path
+          d="M 15,108 A 85,85 0 0 1 185,108"
+          fill="none"
+          stroke="#E5E7EB"
+          strokeWidth="22"
+          strokeLinecap="round"
+        />
+        {/* Progress arc */}
+        <path
+          d="M 15,108 A 85,85 0 0 1 185,108"
+          fill="none"
+          stroke={arcColor}
+          strokeWidth="22"
+          strokeLinecap="round"
+          strokeDasharray={`${fillLength} ${totalLength}`}
+        />
+        {/* Center text */}
+        <text
+          x="100" y="83"
+          textAnchor="middle"
+          fontSize="28"
+          fontWeight="700"
+          fill={over ? '#EF4444' : '#111827'}>
+          {over ? net - goal : Math.abs(remaining)}
+        </text>
+        <text
+          x="100" y="100"
+          textAnchor="middle"
+          fontSize="10"
+          fill="#6B7280">
+          {over ? 'Calories Over' : 'Calories Remaining'}
+        </text>
+      </svg>
+
       <div className="flex justify-center gap-3 text-xs text-gray-400 mt-1 flex-wrap">
         <span><span className="font-medium text-gray-600">{goal}</span> Goal</span>
         <span>−</span>
