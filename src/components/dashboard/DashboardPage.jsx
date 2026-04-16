@@ -29,16 +29,16 @@ export default function DashboardPage() {
 
   return (
     <div className="pt-4 space-y-4">
-      <h1 className="text-xl font-bold text-white">Dashboard</h1>
+      <h1 className="text-xl font-bold text-[#FFD700]">Dashboard</h1>
 
       <CalorieRing consumed={dailyTotals.calories} goal={goals.calorieGoal} />
       <MacroBreakdown totals={dailyTotals} targets={goals.macroTargets} />
       <WeeklyCalorieChart calorieGoal={goals.calorieGoal} />
 
-      <div className="bg-gray-900 rounded-2xl p-4">
-        <h2 className="text-sm font-medium text-gray-400 mb-3">Log Weight</h2>
+      <div className="bg-[#141414] rounded-2xl p-4">
+        <h2 className="text-sm font-medium text-[#997700] mb-3">Log Weight</h2>
         {latestWeight && (
-          <p className="text-xs text-gray-500 mb-2">
+          <p className="text-xs text-[#665500] mb-2">
             Last logged: {latestWeight.weightKg} kg on {latestWeight.date}
           </p>
         )}
@@ -48,18 +48,18 @@ export default function DashboardPage() {
             value={weightInput}
             onChange={e => setWeightInput(e.target.value)}
             placeholder="kg"
-            className="flex-1 bg-gray-800 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            className="flex-1 bg-[#1A1A1A] border border-[#3D2E00] rounded-lg px-3 py-2 text-[#FFD700] placeholder:text-[#665500] focus:outline-none focus:ring-2 focus:ring-[#00AAFF]"
           />
-          <button type="submit" className="bg-emerald-500 hover:bg-emerald-400 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+          <button type="submit" className="bg-[#00FF66] hover:bg-[#00DD55] text-black px-4 py-2 rounded-lg font-medium transition-colors">
             Log
           </button>
         </form>
       </div>
 
-      <div className="bg-gray-900 rounded-2xl p-4 text-xs text-gray-500 space-y-1">
-        <p>BMR: <span className="text-gray-300">{goals.bmr} kcal</span></p>
-        <p>TDEE: <span className="text-gray-300">{goals.tdee} kcal</span></p>
-        <p>Daily Goal: <span className="text-emerald-400 font-medium">{goals.calorieGoal} kcal</span></p>
+      <div className="bg-[#141414] rounded-2xl p-4 text-xs text-[#665500] space-y-1">
+        <p>BMR: <span className="text-[#CCA800]">{goals.bmr} kcal</span></p>
+        <p>TDEE: <span className="text-[#CCA800]">{goals.tdee} kcal</span></p>
+        <p>Daily Goal: <span className="text-[#00FF66] font-medium">{goals.calorieGoal} kcal</span></p>
       </div>
     </div>
   );

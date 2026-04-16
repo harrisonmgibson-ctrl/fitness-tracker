@@ -8,9 +8,9 @@ function formatDate(isoDate) {
 export default function WeightChart({ log, goalWeightKg }) {
   if (!log || log.length < 2) {
     return (
-      <div className="bg-white rounded-2xl shadow-sm p-4">
-        <h2 className="text-sm font-medium text-gray-500 mb-2">Weight Trend</h2>
-        <p className="text-xs text-gray-400 text-center py-4">
+      <div className="bg-[#141414] rounded-2xl shadow-sm p-4">
+        <h2 className="text-sm font-medium text-[#997700] mb-2">Weight Trend</h2>
+        <p className="text-xs text-[#665500] text-center py-4">
           Log at least 2 weight entries to see your trend.
         </p>
       </div>
@@ -27,9 +27,9 @@ export default function WeightChart({ log, goalWeightKg }) {
 
   if (data.length < 2) {
     return (
-      <div className="bg-white rounded-2xl shadow-sm p-4">
-        <h2 className="text-sm font-medium text-gray-500 mb-2">Weight Trend</h2>
-        <p className="text-xs text-gray-400 text-center py-4">
+      <div className="bg-[#141414] rounded-2xl shadow-sm p-4">
+        <h2 className="text-sm font-medium text-[#997700] mb-2">Weight Trend</h2>
+        <p className="text-xs text-[#665500] text-center py-4">
           Log at least 2 weight entries to see your trend.
         </p>
       </div>
@@ -41,44 +41,44 @@ export default function WeightChart({ log, goalWeightKg }) {
   const maxW = Math.max(...weights, goalWeightKg ?? -Infinity) + 1;
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm p-4">
-      <h2 className="text-sm font-medium text-gray-500 mb-3">Weight Trend</h2>
+    <div className="bg-[#141414] rounded-2xl shadow-sm p-4">
+      <h2 className="text-sm font-medium text-[#997700] mb-3">Weight Trend</h2>
       <ResponsiveContainer width="100%" height={180}>
         <LineChart data={data} margin={{ top: 4, right: 8, bottom: 0, left: -16 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#F3F4F6" vertical={false} />
+          <CartesianGrid strokeDasharray="3 3" stroke="#2A2000" vertical={false} />
           <XAxis
             dataKey="label"
-            tick={{ fontSize: 10, fill: '#9CA3AF' }}
+            tick={{ fontSize: 10, fill: '#997700' }}
             interval="preserveStartEnd"
             tickLine={false}
             axisLine={false}
           />
           <YAxis
             domain={[minW, maxW]}
-            tick={{ fontSize: 10, fill: '#9CA3AF' }}
+            tick={{ fontSize: 10, fill: '#997700' }}
             tickLine={false}
             axisLine={false}
             tickFormatter={v => `${v}kg`}
           />
           <Tooltip
-            contentStyle={{ fontSize: 12, borderRadius: 8, border: '1px solid #E5E7EB' }}
+            contentStyle={{ fontSize: 12, borderRadius: 8, border: '1px solid #3D2E00', backgroundColor: '#141414' }}
             formatter={v => [`${v} kg`, 'Weight']}
             labelFormatter={l => l}
           />
           {goalWeightKg != null && (
             <ReferenceLine
               y={goalWeightKg}
-              stroke="#22C55E"
+              stroke="#00FF66"
               strokeDasharray="4 4"
-              label={{ value: 'Goal', position: 'insideTopRight', fontSize: 10, fill: '#22C55E' }}
+              label={{ value: 'Goal', position: 'insideTopRight', fontSize: 10, fill: '#00FF66' }}
             />
           )}
           <Line
             type="monotone"
             dataKey="weight"
-            stroke="#0066EE"
+            stroke="#00AAFF"
             strokeWidth={2}
-            dot={{ r: 3, fill: '#0066EE', strokeWidth: 0 }}
+            dot={{ r: 3, fill: '#00AAFF', strokeWidth: 0 }}
             activeDot={{ r: 5 }}
           />
         </LineChart>

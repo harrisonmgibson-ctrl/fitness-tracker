@@ -17,14 +17,14 @@ export default function ReminderBanner({ entryCount }) {
   }
 
   return (
-    <div className="bg-yellow-50 border border-yellow-200 rounded-2xl px-4 py-3 flex items-center justify-between">
+    <div className="bg-[#1A1200] border border-[#5C4500] rounded-2xl px-4 py-3 flex items-center justify-between">
       <div className="flex items-center gap-2">
         <span className="text-lg">🔔</span>
-        <p className="text-sm text-yellow-800 font-medium">Don't forget to log your meals today!</p>
+        <p className="text-sm text-[#FFD700] font-medium">Don't forget to log your meals today!</p>
       </div>
       <button
         onClick={dismiss}
-        className="text-yellow-500 hover:text-yellow-700 text-lg leading-none transition-colors ml-2">
+        className="text-[#CCA800] hover:text-[#FFD700] text-lg leading-none transition-colors ml-2">
         ✕
       </button>
     </div>

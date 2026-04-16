@@ -8,14 +8,14 @@ export default function DatePicker({ date, onChange, compact }) {
       <div className="flex items-center justify-center gap-3">
         <button
           onClick={() => onChange(addDays(date, -1))}
-          className="p-1.5 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors text-gray-600 text-lg leading-none">
+          className="p-1.5 rounded-lg bg-[#1E1E1E] hover:bg-[#2A2A2A] transition-colors text-[#CCA800] text-lg leading-none">
           ‹
         </button>
-        <span className="font-semibold text-gray-900 text-sm">{formatDisplayDate(date)}</span>
+        <span className="font-semibold text-[#FFD700] text-sm">{formatDisplayDate(date)}</span>
         <button
           onClick={() => onChange(addDays(date, 1))}
           disabled={isToday}
-          className="p-1.5 rounded-lg bg-gray-100 hover:bg-gray-200 disabled:opacity-30 transition-colors text-gray-600 text-lg leading-none">
+          className="p-1.5 rounded-lg bg-[#1E1E1E] hover:bg-[#2A2A2A] disabled:opacity-30 transition-colors text-[#CCA800] text-lg leading-none">
           ›
         </button>
       </div>
@@ -26,14 +26,14 @@ export default function DatePicker({ date, onChange, compact }) {
     <div className="flex items-center justify-between py-3">
       <button
         onClick={() => onChange(addDays(date, -1))}
-        className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors text-gray-600">
+        className="p-2 rounded-lg bg-[#1E1E1E] hover:bg-[#2A2A2A] transition-colors text-[#CCA800]">
         ‹
       </button>
-      <span className="font-semibold text-gray-900">{formatDisplayDate(date)}</span>
+      <span className="font-semibold text-[#FFD700]">{formatDisplayDate(date)}</span>
       <button
         onClick={() => onChange(addDays(date, 1))}
         disabled={isToday}
-        className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 disabled:opacity-30 transition-colors text-gray-600">
+        className="p-2 rounded-lg bg-[#1E1E1E] hover:bg-[#2A2A2A] disabled:opacity-30 transition-colors text-[#CCA800]">
         ›
       </button>
     </div>

@@ -33,7 +33,7 @@ export default function ProgressPage() {
 
   return (
     <div className="pt-4 space-y-4">
-      <h1 className="text-xl font-bold text-gray-900">Progress</h1>
+      <h1 className="text-xl font-bold text-[#FFD700]">Progress</h1>
 
       <WeeklySummaryCard calorieGoal={goals.calorieGoal} />
       <WeeklyCalorieChart calorieGoal={goals.calorieGoal} />
@@ -41,10 +41,10 @@ export default function ProgressPage() {
 
       <WeightChart log={log} goalWeightKg={profile?.goalWeightKg ?? null} />
 
-      <div className="bg-white rounded-2xl shadow-sm p-4">
-        <h2 className="text-sm font-medium text-gray-500 mb-3">Log Weight</h2>
+      <div className="bg-[#141414] rounded-2xl shadow-sm p-4">
+        <h2 className="text-sm font-medium text-[#997700] mb-3">Log Weight</h2>
         {latestWeight && (
-          <p className="text-xs text-gray-400 mb-2">
+          <p className="text-xs text-[#665500] mb-2">
             Last logged: {latestWeight.weightKg} kg on {latestWeight.date}
           </p>
         )}
@@ -54,47 +54,47 @@ export default function ProgressPage() {
             value={weightInput}
             onChange={e => setWeightInput(e.target.value)}
             placeholder="kg"
-            className="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#0066EE]"
+            className="flex-1 bg-[#1A1A1A] border border-[#3D2E00] rounded-xl px-3 py-2 text-[#FFD700] placeholder:text-[#665500] focus:outline-none focus:ring-2 focus:ring-[#00AAFF]"
           />
-          <button type="submit" className="bg-[#0066EE] hover:bg-[#0052BE] text-white px-4 py-2 rounded-xl font-medium transition-colors">
+          <button type="submit" className="bg-[#00AAFF] hover:bg-[#0088DD] text-white px-4 py-2 rounded-xl font-medium transition-colors">
             Log
           </button>
         </form>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-sm p-4 text-sm space-y-2">
+      <div className="bg-[#141414] rounded-2xl shadow-sm p-4 text-sm space-y-2">
         <div className="flex justify-between">
-          <span className="text-gray-500">BMR</span>
-          <span className="text-gray-800">{goals.bmr} kcal</span>
+          <span className="text-[#997700]">BMR</span>
+          <span className="text-[#FFD700]">{goals.bmr} kcal</span>
         </div>
         <div className="flex justify-between">
-          <span className="text-gray-500">TDEE (profile)</span>
-          <span className="text-gray-800">{goals.tdee} kcal</span>
+          <span className="text-[#997700]">TDEE (profile)</span>
+          <span className="text-[#FFD700]">{goals.tdee} kcal</span>
         </div>
         <div className="flex justify-between">
-          <span className="text-gray-500">Daily Goal</span>
-          <span className="text-[#0066EE] font-semibold">{goals.calorieGoal} kcal</span>
+          <span className="text-[#997700]">Daily Goal</span>
+          <span className="text-[#00AAFF] font-semibold">{goals.calorieGoal} kcal</span>
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-sm p-4 text-sm space-y-2">
-        <h2 className="text-sm font-medium text-gray-500 mb-1">Adaptive TDEE Estimate</h2>
+      <div className="bg-[#141414] rounded-2xl shadow-sm p-4 text-sm space-y-2">
+        <h2 className="text-sm font-medium text-[#997700] mb-1">Adaptive TDEE Estimate</h2>
         {adaptiveTDEE ? (
           <>
             <div className="flex justify-between">
-              <span className="text-gray-500">Implied TDEE</span>
-              <span className="font-semibold text-[#0066EE]">{adaptiveTDEE} kcal</span>
+              <span className="text-[#997700]">Implied TDEE</span>
+              <span className="font-semibold text-[#00AAFF]">{adaptiveTDEE} kcal</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-gray-500">Profile TDEE</span>
-              <span className="text-gray-800">{goals.tdee} kcal</span>
+              <span className="text-[#997700]">Profile TDEE</span>
+              <span className="text-[#FFD700]">{goals.tdee} kcal</span>
             </div>
-            <p className="text-xs text-gray-400 pt-1">
+            <p className="text-xs text-[#665500] pt-1">
               Estimated from your weight trend and logged calories over the past 30 days.
             </p>
           </>
         ) : (
-          <p className="text-xs text-gray-400">
+          <p className="text-xs text-[#665500]">
             Log your weight for at least 2 entries spanning 7+ days to see your adaptive TDEE estimate.
           </p>
         )}

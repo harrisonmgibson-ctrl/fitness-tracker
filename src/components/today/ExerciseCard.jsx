@@ -33,14 +33,14 @@ export default function ExerciseCard({ date }) {
   }
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm p-4">
+    <div className="bg-[#141414] rounded-2xl shadow-sm p-4">
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
           <span className="text-xl">🏃</span>
-          <p className="text-sm font-semibold text-gray-800">Exercise</p>
+          <p className="text-sm font-semibold text-[#FFD700]">Exercise</p>
         </div>
         {totalBurned > 0 && (
-          <span className="text-sm font-semibold text-green-600">+{totalBurned} kcal</span>
+          <span className="text-sm font-semibold text-[#00FF66]">+{totalBurned} kcal</span>
         )}
       </div>
 
@@ -48,12 +48,12 @@ export default function ExerciseCard({ date }) {
         <div className="space-y-1 mb-3">
           {entries.map(e => (
             <div key={e.id} className="flex items-center justify-between text-sm">
-              <span className="text-gray-700">{e.name}</span>
+              <span className="text-[#CCA800]">{e.name}</span>
               <div className="flex items-center gap-2">
-                <span className="text-green-600 font-medium">+{e.caloriesBurned} kcal</span>
+                <span className="text-[#00FF66] font-medium">+{e.caloriesBurned} kcal</span>
                 <button
                   onClick={() => removeExercise(e.id)}
-                  className="text-gray-300 hover:text-red-400 text-xs leading-none transition-colors">
+                  className="text-[#665500] hover:text-[#FF2233] text-xs leading-none transition-colors">
                   ✕
                 </button>
               </div>
@@ -72,8 +72,8 @@ export default function ExerciseCard({ date }) {
             onClick={() => setQuickPick(quickPick?.id === ex.id ? null : ex)}
             className={`flex-shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${
               quickPick?.id === ex.id
-                ? 'bg-[#0066EE] border-[#0066EE] text-white'
-                : 'bg-gray-50 border-gray-200 text-gray-600 hover:border-[#0066EE]/50'
+                ? 'bg-[#00AAFF] border-[#00AAFF] text-white'
+                : 'bg-[#1A1A1A] border-[#3D2E00] text-[#CCA800] hover:border-[#00AAFF]/50'
             }`}>
             <span>{ex.emoji}</span>
             <span>{ex.name}</span>
@@ -85,9 +85,9 @@ export default function ExerciseCard({ date }) {
       <form onSubmit={handleAdd} className="flex gap-2">
         {quickPick ? (
           <>
-            <div className="flex-1 bg-gray-50 border border-[#0066EE]/30 rounded-xl px-3 py-2 text-sm text-gray-700 flex items-center justify-between">
+            <div className="flex-1 bg-[#1A1A1A] border border-[#00AAFF]/30 rounded-xl px-3 py-2 text-sm text-[#CCA800] flex items-center justify-between">
               <span>{quickPick.emoji} {quickPick.name}</span>
-              <button type="button" onClick={() => setQuickPick(null)} className="text-gray-400 hover:text-gray-600 text-xs ml-2">✕</button>
+              <button type="button" onClick={() => setQuickPick(null)} className="text-[#665500] hover:text-[#CCA800] text-xs ml-2">✕</button>
             </div>
             <div className="flex items-center gap-1">
               <input
@@ -96,13 +96,13 @@ export default function ExerciseCard({ date }) {
                 onChange={e => setDuration(e.target.value)}
                 placeholder="min"
                 min="1"
-                className="w-16 bg-gray-50 border border-gray-200 rounded-xl px-2 py-2 text-sm text-gray-900 text-center focus:outline-none focus:ring-2 focus:ring-[#0066EE]"
+                className="w-16 bg-[#1A1A1A] border border-[#3D2E00] rounded-xl px-2 py-2 text-sm text-[#FFD700] text-center focus:outline-none focus:ring-2 focus:ring-[#00AAFF]"
               />
-              <span className="text-xs text-gray-400">min</span>
+              <span className="text-xs text-[#665500]">min</span>
             </div>
             <button
               type="submit"
-              className="bg-[#0066EE] hover:bg-[#0052BE] text-white px-3 py-2 rounded-xl text-sm font-medium transition-colors whitespace-nowrap">
+              className="bg-[#00AAFF] hover:bg-[#0088DD] text-white px-3 py-2 rounded-xl text-sm font-medium transition-colors whitespace-nowrap">
               +{kcalPreview} kcal
             </button>
           </>
@@ -113,7 +113,7 @@ export default function ExerciseCard({ date }) {
               value={name}
               onChange={e => setName(e.target.value)}
               placeholder="Activity name"
-              className="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#0066EE]"
+              className="flex-1 bg-[#1A1A1A] border border-[#3D2E00] rounded-xl px-3 py-2 text-sm text-[#FFD700] placeholder:text-[#665500] focus:outline-none focus:ring-2 focus:ring-[#00AAFF]"
             />
             <input
               type="number"
@@ -121,11 +121,11 @@ export default function ExerciseCard({ date }) {
               onChange={e => setCals(e.target.value)}
               placeholder="kcal"
               min="1"
-              className="w-20 bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#0066EE]"
+              className="w-20 bg-[#1A1A1A] border border-[#3D2E00] rounded-xl px-3 py-2 text-sm text-[#FFD700] placeholder:text-[#665500] focus:outline-none focus:ring-2 focus:ring-[#00AAFF]"
             />
             <button
               type="submit"
-              className="bg-[#0066EE] hover:bg-[#0052BE] text-white px-3 py-2 rounded-xl text-sm font-medium transition-colors">
+              className="bg-[#00AAFF] hover:bg-[#0088DD] text-white px-3 py-2 rounded-xl text-sm font-medium transition-colors">
               Add
             </button>
           </>

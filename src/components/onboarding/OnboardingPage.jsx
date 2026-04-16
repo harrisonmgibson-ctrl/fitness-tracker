@@ -23,13 +23,13 @@ export default function OnboardingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F4F4F4] flex flex-col justify-center py-10 px-4 max-w-lg mx-auto">
+    <div className="min-h-screen bg-[#0A0A0A] flex flex-col justify-center py-10 px-4 max-w-lg mx-auto">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-1">Set Up Your Profile</h1>
-        <p className="text-gray-500 text-sm">Step {step + 1} of {STEPS.length} — {STEPS[step]}</p>
+        <h1 className="text-2xl font-bold text-[#FFD700] mb-1">Set Up Your Profile</h1>
+        <p className="text-[#997700] text-sm">Step {step + 1} of {STEPS.length} — {STEPS[step]}</p>
         <div className="flex gap-1 mt-3">
           {STEPS.map((_, i) => (
-            <div key={i} className={`h-1 flex-1 rounded-full transition-colors ${i <= step ? 'bg-[#0066EE]' : 'bg-gray-200'}`} />
+            <div key={i} className={`h-1 flex-1 rounded-full transition-colors ${i <= step ? 'bg-[#00AAFF]' : 'bg-[#2A2A2A]'}`} />
           ))}
         </div>
       </div>

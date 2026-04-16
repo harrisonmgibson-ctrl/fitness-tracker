@@ -13,21 +13,21 @@ export default function StepActivity({ data, onChange, onSubmit, onBack }) {
         {LEVELS.map(l => (
           <button key={l.value} type="button"
             onClick={() => onChange({ activityLevel: l.value })}
-            className={`w-full flex justify-between items-center px-4 py-3 rounded-xl transition-colors ${data.activityLevel === l.value ? 'bg-[#0066EE] text-white' : 'bg-white border border-gray-200 text-gray-700'}`}>
+            className={`w-full flex justify-between items-center px-4 py-3 rounded-xl transition-colors ${data.activityLevel === l.value ? 'bg-[#00AAFF] text-white' : 'bg-[#141414] border border-[#3D2E00] text-[#CCA800]'}`}>
             <span className="font-medium">{l.label}</span>
             <span className="text-sm opacity-70">{l.description}</span>
           </button>
         ))}
       </div>
       <div className="flex gap-3">
-        <button type="button" onClick={onBack} className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 rounded-xl transition-colors">
+        <button type="button" onClick={onBack} className="flex-1 bg-[#1E1E1E] hover:bg-[#2A2A2A] text-[#CCA800] font-semibold py-3 rounded-xl transition-colors">
           Back
         </button>
         <button
           type="button"
           onClick={onSubmit}
           disabled={!data.activityLevel}
-          className="flex-1 bg-[#0066EE] hover:bg-[#0052BE] disabled:opacity-40 text-white font-semibold py-3 rounded-xl transition-colors">
+          className="flex-1 bg-[#00AAFF] hover:bg-[#0088DD] disabled:opacity-40 text-white font-semibold py-3 rounded-xl transition-colors">
           Let's Go
         </button>
       </div>

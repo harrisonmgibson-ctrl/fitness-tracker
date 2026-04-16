@@ -18,27 +18,27 @@ export default function WeeklyCalorieChart({ calorieGoal }) {
   });
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm p-4">
-      <h2 className="text-sm font-medium text-gray-500 mb-3">This Week</h2>
+    <div className="bg-[#141414] rounded-2xl shadow-sm p-4">
+      <h2 className="text-sm font-medium text-[#997700] mb-3">This Week</h2>
       <ResponsiveContainer width="100%" height={160}>
         <BarChart data={data} margin={{ top: 8, right: 4, bottom: 0, left: -20 }}>
-          <XAxis dataKey="day" tick={{ fill: '#9ca3af', fontSize: 11 }} axisLine={false} tickLine={false} />
-          <YAxis tick={{ fill: '#9ca3af', fontSize: 10 }} axisLine={false} tickLine={false} />
+          <XAxis dataKey="day" tick={{ fill: '#997700', fontSize: 11 }} axisLine={false} tickLine={false} />
+          <YAxis tick={{ fill: '#997700', fontSize: 10 }} axisLine={false} tickLine={false} />
           <Tooltip
-            contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: 8 }}
-            labelStyle={{ color: '#6b7280' }}
-            itemStyle={{ color: '#0066EE' }}
+            contentStyle={{ backgroundColor: '#141414', border: '1px solid #3D2E00', borderRadius: 8 }}
+            labelStyle={{ color: '#CCA800' }}
+            itemStyle={{ color: '#00AAFF' }}
             formatter={v => [`${v} kcal`, 'Calories']}
           />
-          <ReferenceLine y={calorieGoal} stroke="#0066EE" strokeDasharray="4 2" strokeWidth={1} />
+          <ReferenceLine y={calorieGoal} stroke="#00AAFF" strokeDasharray="4 2" strokeWidth={1} />
           <Bar dataKey="calories" radius={[4, 4, 0, 0]}>
             {data.map((entry, i) => (
-              <Cell key={i} fill={entry.isToday ? '#0066EE' : '#E5E7EB'} />
+              <Cell key={i} fill={entry.isToday ? '#00AAFF' : '#2A2000'} />
             ))}
           </Bar>
         </BarChart>
       </ResponsiveContainer>
-      <p className="text-xs text-gray-400 mt-1 text-right">— goal: {calorieGoal} kcal</p>
+      <p className="text-xs text-[#665500] mt-1 text-right">— goal: {calorieGoal} kcal</p>
     </div>
   );
 }

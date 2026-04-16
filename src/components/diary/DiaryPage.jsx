@@ -31,14 +31,14 @@ export default function DiaryPage() {
 
       {/* Slim calorie strip */}
       {goals && (
-        <div className="bg-white rounded-2xl shadow-sm px-4 py-3 mb-3 flex items-center justify-between">
+        <div className="bg-[#141414] rounded-2xl shadow-sm px-4 py-3 mb-3 flex items-center justify-between">
           <div>
-            <p className="text-xs text-gray-400">Calories</p>
-            <p className="text-sm font-semibold text-gray-900">
-              {dailyTotals.calories} <span className="text-gray-400 font-normal">/ {goals.calorieGoal} kcal</span>
+            <p className="text-xs text-[#665500]">Calories</p>
+            <p className="text-sm font-semibold text-[#FFD700]">
+              {dailyTotals.calories} <span className="text-[#665500] font-normal">/ {goals.calorieGoal} kcal</span>
             </p>
           </div>
-          <p className={`text-sm font-semibold ${over ? 'text-red-500' : 'text-[#0066EE]'}`}>
+          <p className={`text-sm font-semibold ${over ? 'text-[#FF2233]' : 'text-[#00AAFF]'}`}>
             {over ? `${Math.abs(remaining)} over` : `${remaining} left`}
           </p>
         </div>
@@ -48,7 +48,7 @@ export default function DiaryPage() {
       {isToday && entries.length === 0 && (
         <button
           onClick={() => copyFromDate(getYesterday())}
-          className="w-full mb-3 flex items-center justify-center gap-2 bg-white rounded-2xl shadow-sm px-4 py-3 text-sm text-[#0066EE] font-medium hover:bg-gray-50 transition-colors border border-dashed border-[#0066EE]/30">
+          className="w-full mb-3 flex items-center justify-center gap-2 bg-[#141414] rounded-2xl shadow-sm px-4 py-3 text-sm text-[#00AAFF] font-medium hover:bg-[#1A1A1A] transition-colors border border-dashed border-[#00AAFF]/30">
           📋 Copy Yesterday's Meals
         </button>
       )}

@@ -20,11 +20,11 @@ export default function WeightSparklineCard({ log, onAddWeight }) {
   const latest = log[0];
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm p-4">
+    <div className="bg-[#141414] rounded-2xl shadow-sm p-4">
       <div className="flex items-center justify-between mb-3">
-        <h3 className="text-sm font-medium text-gray-500">Weight</h3>
+        <h3 className="text-sm font-medium text-[#997700]">Weight</h3>
         {latest && (
-          <span className="text-sm font-semibold text-gray-800">{latest.weightKg} kg</span>
+          <span className="text-sm font-semibold text-[#FFD700]">{latest.weightKg} kg</span>
         )}
       </div>
 
@@ -34,11 +34,11 @@ export default function WeightSparklineCard({ log, onAddWeight }) {
             <LineChart data={sparkData}>
               <YAxis domain={['dataMin - 1', 'dataMax + 1']} hide />
               <Tooltip
-                contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: 8, fontSize: 11 }}
+                contentStyle={{ backgroundColor: '#141414', border: '1px solid #3D2E00', borderRadius: 8, fontSize: 11 }}
                 formatter={v => [`${v} kg`]}
                 labelFormatter={l => l}
               />
-              <Line type="monotone" dataKey="weight" stroke="#0066EE" strokeWidth={2} dot={false} />
+              <Line type="monotone" dataKey="weight" stroke="#00AAFF" strokeWidth={2} dot={false} />
             </LineChart>
           </ResponsiveContainer>
         </div>
@@ -50,9 +50,9 @@ export default function WeightSparklineCard({ log, onAddWeight }) {
           value={weightInput}
           onChange={e => setWeightInput(e.target.value)}
           placeholder="Log weight (kg)"
-          className="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#0066EE]"
+          className="flex-1 bg-[#1A1A1A] border border-[#3D2E00] rounded-xl px-3 py-2 text-[#FFD700] placeholder:text-[#665500] text-sm focus:outline-none focus:ring-2 focus:ring-[#00AAFF]"
         />
-        <button type="submit" className="bg-[#0066EE] hover:bg-[#0052BE] text-white px-4 py-2 rounded-xl text-sm font-medium transition-colors">
+        <button type="submit" className="bg-[#00AAFF] hover:bg-[#0088DD] text-white px-4 py-2 rounded-xl text-sm font-medium transition-colors">
           Log
         </button>
       </form>

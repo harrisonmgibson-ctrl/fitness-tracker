@@ -5,13 +5,13 @@ export default {
     extend: {
       colors: {
         brand: {
-          DEFAULT: '#0066EE',
-          light: '#3385F0',
-          dark: '#0052BE',
+          DEFAULT: '#00AAFF',
+          light: '#33BBFF',
+          dark: '#0088DD',
         },
         surface: {
-          DEFAULT: '#F4F4F4',
-          card: '#FFFFFF',
+          DEFAULT: '#0A0A0A',
+          card: '#141414',
         },
       },
     },

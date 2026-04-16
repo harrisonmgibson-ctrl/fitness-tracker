@@ -139,22 +139,22 @@ export default function FoodSearchModal({ mealType, onAdd, onClose }) {
   }
 
   return createPortal(
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/50" onClick={onClose}>
+    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/70" onClick={onClose}>
       <div
-        className="bg-white rounded-t-2xl w-full max-w-lg h-[85vh] flex flex-col"
+        className="bg-[#141414] rounded-t-2xl w-full max-w-lg h-[85vh] flex flex-col"
         onClick={e => e.stopPropagation()}>
 
         {/* Header */}
-        <div className="p-4 border-b border-gray-100 flex-shrink-0">
+        <div className="p-4 border-b border-[#2A2000] flex-shrink-0">
           <div className="flex justify-between items-center mb-3">
-            <h2 className="font-semibold text-gray-900">Add to {MEAL_LABEL[mealType]}</h2>
-            <button onClick={onClose} className="text-gray-400 hover:text-gray-600 text-2xl leading-none">×</button>
+            <h2 className="font-semibold text-[#FFD700]">Add to {MEAL_LABEL[mealType]}</h2>
+            <button onClick={onClose} className="text-[#665500] hover:text-[#CCA800] text-2xl leading-none">×</button>
           </div>
           {/* Tabs */}
-          <div className="flex bg-gray-100 rounded-xl p-1 gap-1">
+          <div className="flex bg-[#1E1E1E] rounded-xl p-1 gap-1">
             {TABS.map(t => (
               <button key={t.id} onClick={() => setActiveTab(t.id)}
-                className={`flex-1 py-1.5 text-xs font-medium rounded-lg transition-colors ${activeTab === t.id ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500'}`}>
+                className={`flex-1 py-1.5 text-xs font-medium rounded-lg transition-colors ${activeTab === t.id ? 'bg-[#2A2A2A] text-[#FFD700] shadow-sm' : 'text-[#997700]'}`}>
                 {t.label}
               </button>
             ))}
@@ -164,59 +164,59 @@ export default function FoodSearchModal({ mealType, onAdd, onClose }) {
         {/* ── BUILD MEAL ──────────────────────────────────────────────────────── */}
         {activeTab === 'build' && (
           <div className="flex flex-col flex-1 overflow-hidden">
-            <div className="p-4 space-y-3 flex-shrink-0 border-b border-gray-50">
+            <div className="p-4 space-y-3 flex-shrink-0 border-b border-[#2A2000]">
               <input
                 type="text" value={mealName} onChange={e => setMealName(e.target.value)}
                 placeholder="Name your meal (e.g. Chicken Rice Bowl)"
-                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0066EE] text-sm"
+                className="w-full bg-[#1A1A1A] border border-[#3D2E00] rounded-xl px-4 py-2.5 text-[#FFD700] placeholder:text-[#665500] focus:outline-none focus:ring-2 focus:ring-[#00AAFF] text-sm"
               />
             </div>
 
             {/* Ingredient list */}
             <div className="overflow-y-auto flex-1 p-4 space-y-2">
               {ingredients.length === 0 && (
-                <p className="text-xs text-gray-400 text-center py-2">Search below to add ingredients</p>
+                <p className="text-xs text-[#665500] text-center py-2">Search below to add ingredients</p>
               )}
               {ingredients.map(({ food, quantity, key }) => (
-                <div key={key} className="flex items-center justify-between bg-gray-50 rounded-xl px-3 py-2">
+                <div key={key} className="flex items-center justify-between bg-[#1A1A1A] rounded-xl px-3 py-2">
                   <div>
-                    <p className="text-sm text-gray-900">{food.name}</p>
-                    <p className="text-xs text-gray-400">{quantity} × {food.servingUnit} · {Math.round(food.calories * quantity)} kcal</p>
+                    <p className="text-sm text-[#FFD700]">{food.name}</p>
+                    <p className="text-xs text-[#665500]">{quantity} × {food.servingUnit} · {Math.round(food.calories * quantity)} kcal</p>
                   </div>
-                  <button onClick={() => removeIngredient(key)} className="text-gray-300 hover:text-red-400 text-xl leading-none ml-3">×</button>
+                  <button onClick={() => removeIngredient(key)} className="text-[#665500] hover:text-[#FF2233] text-xl leading-none ml-3">×</button>
                 </div>
               ))}
 
               {/* Running total */}
               {ingredients.length > 0 && (
-                <div className="bg-blue-50 rounded-xl p-3 grid grid-cols-4 gap-1 text-center text-xs mt-2">
-                  <div><p className="text-gray-400">Calories</p><p className="font-semibold text-gray-900">{mealTotal.calories}</p></div>
-                  <div><p className="text-gray-400">Protein</p><p className="font-semibold text-gray-900">{mealTotal.proteinG}g</p></div>
-                  <div><p className="text-gray-400">Carbs</p><p className="font-semibold text-gray-900">{mealTotal.carbsG}g</p></div>
-                  <div><p className="text-gray-400">Fat</p><p className="font-semibold text-gray-900">{mealTotal.fatG}g</p></div>
+                <div className="bg-[#001A2E] rounded-xl p-3 grid grid-cols-4 gap-1 text-center text-xs mt-2">
+                  <div><p className="text-[#665500]">Calories</p><p className="font-semibold text-[#FFD700]">{mealTotal.calories}</p></div>
+                  <div><p className="text-[#665500]">Protein</p><p className="font-semibold text-[#FFD700]">{mealTotal.proteinG}g</p></div>
+                  <div><p className="text-[#665500]">Carbs</p><p className="font-semibold text-[#FFD700]">{mealTotal.carbsG}g</p></div>
+                  <div><p className="text-[#665500]">Fat</p><p className="font-semibold text-[#FFD700]">{mealTotal.fatG}g</p></div>
                 </div>
               )}
 
               {/* Ingredient search */}
               <div className="pt-2 space-y-2">
-                <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">Add Ingredient</p>
+                <p className="text-xs font-medium text-[#997700] uppercase tracking-wide">Add Ingredient</p>
                 <input
                   type="text" value={ingQuery} onChange={e => { setIngQuery(e.target.value); setIngSelected(null); }}
                   placeholder="Search ingredients..."
-                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0066EE] text-sm"
+                  className="w-full bg-[#1A1A1A] border border-[#3D2E00] rounded-xl px-4 py-2.5 text-[#FFD700] placeholder:text-[#665500] focus:outline-none focus:ring-2 focus:ring-[#00AAFF] text-sm"
                 />
 
                 {/* Ingredient search results */}
                 {ingQuery.length > 0 && !ingSelected && (
-                  <div className="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm">
+                  <div className="bg-[#1E1E1E] border border-[#2A2000] rounded-xl overflow-hidden shadow-sm">
                     {ingResults.length === 0 && (
-                      <p className="text-xs text-gray-400 p-3 text-center">No results</p>
+                      <p className="text-xs text-[#665500] p-3 text-center">No results</p>
                     )}
                     {ingResults.map(food => (
                       <button key={food.id} onClick={() => setIngSelected(food)}
-                        className="w-full flex justify-between px-4 py-2.5 hover:bg-gray-50 border-b border-gray-50 last:border-0 text-left">
-                        <span className="text-sm text-gray-900">{food.name}</span>
-                        <span className="text-xs text-gray-400">{food.calories} kcal</span>
+                        className="w-full flex justify-between px-4 py-2.5 hover:bg-[#2A2A2A] border-b border-[#2A2000] last:border-0 text-left">
+                        <span className="text-sm text-[#FFD700]">{food.name}</span>
+                        <span className="text-xs text-[#665500]">{food.calories} kcal</span>
                       </button>
                     ))}
                   </div>
@@ -224,21 +224,21 @@ export default function FoodSearchModal({ mealType, onAdd, onClose }) {
 
                 {/* Quantity picker for selected ingredient */}
                 {ingSelected && (
-                  <div className="bg-gray-50 rounded-xl p-3 space-y-2">
+                  <div className="bg-[#1A1A1A] rounded-xl p-3 space-y-2">
                     <div className="flex justify-between items-center">
-                      <span className="text-sm font-medium text-gray-800">{ingSelected.name}</span>
-                      <button onClick={() => setIngSelected(null)} className="text-gray-400 text-sm">Change</button>
+                      <span className="text-sm font-medium text-[#FFD700]">{ingSelected.name}</span>
+                      <button onClick={() => setIngSelected(null)} className="text-[#997700] text-sm">Change</button>
                     </div>
                     <div className="flex items-center gap-3">
-                      <label className="text-xs text-gray-500">Servings:</label>
+                      <label className="text-xs text-[#997700]">Servings:</label>
                       <input type="number" min="0.25" max="20" step="0.25" value={ingQty}
                         onChange={e => setIngQty(Number(e.target.value))}
-                        className="w-24 bg-white border border-gray-200 rounded-lg px-3 py-1.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#0066EE]"
+                        className="w-24 bg-[#141414] border border-[#3D2E00] rounded-lg px-3 py-1.5 text-sm text-[#FFD700] focus:outline-none focus:ring-2 focus:ring-[#00AAFF]"
                       />
-                      <span className="text-xs text-gray-400">{Math.round(ingSelected.calories * ingQty)} kcal</span>
+                      <span className="text-xs text-[#665500]">{Math.round(ingSelected.calories * ingQty)} kcal</span>
                     </div>
                     <button onClick={addIngredient}
-                      className="w-full bg-[#0066EE] hover:bg-[#0052BE] text-white text-sm font-medium py-2 rounded-xl transition-colors">
+                      className="w-full bg-[#00AAFF] hover:bg-[#0088DD] text-white text-sm font-medium py-2 rounded-xl transition-colors">
                       + Add to Meal
                     </button>
                   </div>
@@ -248,17 +248,17 @@ export default function FoodSearchModal({ mealType, onAdd, onClose }) {
 
             {/* Footer actions */}
             {ingredients.length > 0 && (
-              <div className="p-4 border-t border-gray-100 space-y-2 flex-shrink-0">
+              <div className="p-4 border-t border-[#2A2000] space-y-2 flex-shrink-0">
                 {savedMsg && (
-                  <p className="text-center text-xs text-green-600 font-medium">✓ Saved to My Meals</p>
+                  <p className="text-center text-xs text-[#00FF66] font-medium">✓ Saved to My Meals</p>
                 )}
                 <div className="flex gap-2">
                   <button onClick={handleSaveMeal}
-                    className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 py-2.5 rounded-xl text-sm font-medium transition-colors">
+                    className="flex-1 bg-[#1E1E1E] hover:bg-[#2A2A2A] text-[#CCA800] py-2.5 rounded-xl text-sm font-medium transition-colors">
                     Save to My Meals
                   </button>
                   <button onClick={handleAddMeal}
-                    className="flex-1 bg-[#0066EE] hover:bg-[#0052BE] text-white py-2.5 rounded-xl text-sm font-semibold transition-colors">
+                    className="flex-1 bg-[#00AAFF] hover:bg-[#0088DD] text-white py-2.5 rounded-xl text-sm font-semibold transition-colors">
                     Add to Diary
                   </button>
                 </div>
@@ -281,7 +281,7 @@ export default function FoodSearchModal({ mealType, onAdd, onClose }) {
               <div className="p-4 flex-shrink-0">
                 <input type="text" value={mealQuery} onChange={e => setMealQuery(e.target.value)}
                   placeholder="Search meals..."
-                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0066EE] text-sm"
+                  className="w-full bg-[#1A1A1A] border border-[#3D2E00] rounded-xl px-4 py-2.5 text-[#FFD700] placeholder:text-[#665500] focus:outline-none focus:ring-2 focus:ring-[#00AAFF] text-sm"
                 />
               </div>
               <div className="overflow-y-auto flex-1 px-4 pb-4 space-y-4">
@@ -289,7 +289,7 @@ export default function FoodSearchModal({ mealType, onAdd, onClose }) {
                 {/* Saved meals */}
                 {savedMeals.length > 0 && (
                   <div>
-                    <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-2">My Saved Meals</p>
+                    <p className="text-xs font-medium text-[#997700] uppercase tracking-wide mb-2">My Saved Meals</p>
                     <div className="space-y-2">
                       {mealFilter(savedMeals).map(meal => (
                         <MealRow key={meal.id} meal={meal} onAdd={() => addPreBuiltMeal(meal)}
@@ -305,7 +305,7 @@ export default function FoodSearchModal({ mealType, onAdd, onClose }) {
                   if (filtered.length === 0) return null;
                   return (
                     <div key={cat}>
-                      <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-2">{cat}</p>
+                      <p className="text-xs font-medium text-[#997700] uppercase tracking-wide mb-2">{cat}</p>
                       <div className="space-y-2">
                         {filtered.map(meal => (
                           <MealRow
@@ -321,7 +321,7 @@ export default function FoodSearchModal({ mealType, onAdd, onClose }) {
                 })}
 
                 {savedMeals.length === 0 && mealFilter(preMeals).length === 0 && (
-                  <p className="text-sm text-gray-400 text-center py-4">No meals found</p>
+                  <p className="text-sm text-[#665500] text-center py-4">No meals found</p>
                 )}
               </div>
             </div>
@@ -331,11 +331,11 @@ export default function FoodSearchModal({ mealType, onAdd, onClose }) {
         {/* ── SEARCH ──────────────────────────────────────────────────────────── */}
         {activeTab === 'search' && (
           <>
-            <div className="px-4 py-3 border-b border-gray-100 flex-shrink-0">
+            <div className="px-4 py-3 border-b border-[#2A2000] flex-shrink-0">
               <input autoFocus type="text" value={searchQuery}
                 onChange={e => { setSearchQuery(e.target.value); setSearchSelected(null); }}
                 placeholder="Search foods..."
-                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0066EE] text-sm"
+                className="w-full bg-[#1A1A1A] border border-[#3D2E00] rounded-xl px-4 py-2.5 text-[#FFD700] placeholder:text-[#665500] focus:outline-none focus:ring-2 focus:ring-[#00AAFF] text-sm"
               />
             </div>
 
@@ -345,37 +345,37 @@ export default function FoodSearchModal({ mealType, onAdd, onClose }) {
                 {searchQuery === '' && recents.length > 0 && (
                   <>
                     <li className="px-4 pt-3 pb-1">
-                      <p className="text-xs font-medium text-gray-400 uppercase tracking-wide">Recently Used</p>
+                      <p className="text-xs font-medium text-[#665500] uppercase tracking-wide">Recently Used</p>
                     </li>
                     {recents.slice(0, 8).map(r => {
                       const food = { id: r.foodId, name: r.foodName, servingUnit: r.servingUnit, servingSizeG: r.servingSizeG, calories: r.calories, proteinG: r.proteinG, carbsG: r.carbsG, fatG: r.fatG, fiberG: r.fiberG };
                       return (
                         <li key={r.foodId}>
                           <button onClick={() => { setSearchSelected(food); setSearchQty(1); }}
-                            className="w-full flex justify-between items-center px-4 py-3 hover:bg-gray-50 border-b border-gray-50 text-left">
+                            className="w-full flex justify-between items-center px-4 py-3 hover:bg-[#1A1A1A] border-b border-[#2A2000] text-left">
                             <div>
-                              <p className="text-sm text-gray-900">{r.foodName}</p>
-                              <p className="text-xs text-gray-400">{r.servingUnit}</p>
+                              <p className="text-sm text-[#FFD700]">{r.foodName}</p>
+                              <p className="text-xs text-[#665500]">{r.servingUnit}</p>
                             </div>
-                            <span className="text-sm text-gray-500">{r.calories} kcal</span>
+                            <span className="text-sm text-[#997700]">{r.calories} kcal</span>
                           </button>
                         </li>
                       );
                     })}
                     <li className="px-4 pt-3 pb-1">
-                      <p className="text-xs font-medium text-gray-400 uppercase tracking-wide">All Foods</p>
+                      <p className="text-xs font-medium text-[#665500] uppercase tracking-wide">All Foods</p>
                     </li>
                   </>
                 )}
                 {searchResults.map(food => (
                   <li key={food.id}>
                     <button onClick={() => { setSearchSelected(food); setSearchQty(1); }}
-                      className="w-full flex justify-between items-center px-4 py-3 hover:bg-gray-50 border-b border-gray-50 text-left">
+                      className="w-full flex justify-between items-center px-4 py-3 hover:bg-[#1A1A1A] border-b border-[#2A2000] text-left">
                       <div>
-                        <p className="text-sm text-gray-900">{food.name}</p>
-                        <p className="text-xs text-gray-400">{food.servingSizeG}{food.servingUnit === 'g' || food.servingUnit === 'ml' ? food.servingUnit : ` (${food.servingUnit})`}</p>
+                        <p className="text-sm text-[#FFD700]">{food.name}</p>
+                        <p className="text-xs text-[#665500]">{food.servingSizeG}{food.servingUnit === 'g' || food.servingUnit === 'ml' ? food.servingUnit : ` (${food.servingUnit})`}</p>
                       </div>
-                      <span className="text-sm text-gray-500">{food.calories} kcal</span>
+                      <span className="text-sm text-[#997700]">{food.calories} kcal</span>
                     </button>
                   </li>
                 ))}
@@ -383,27 +383,27 @@ export default function FoodSearchModal({ mealType, onAdd, onClose }) {
             ) : (
               <div className="p-4 space-y-4 overflow-y-auto flex-1">
                 <div>
-                  <p className="font-medium text-gray-900">{searchSelected.name}</p>
-                  <p className="text-xs text-gray-400">{searchSelected.calories} kcal per {searchSelected.servingUnit}</p>
+                  <p className="font-medium text-[#FFD700]">{searchSelected.name}</p>
+                  <p className="text-xs text-[#665500]">{searchSelected.calories} kcal per {searchSelected.servingUnit}</p>
                 </div>
                 <div>
-                  <label className="text-sm text-gray-500 block mb-1">Servings</label>
+                  <label className="text-sm text-[#997700] block mb-1">Servings</label>
                   <input type="number" min="0.25" max="20" step="0.25" value={searchQty}
                     onChange={e => setSearchQty(Number(e.target.value))}
-                    className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#0066EE]"
+                    className="w-full bg-[#1A1A1A] border border-[#3D2E00] rounded-xl px-4 py-2.5 text-[#FFD700] focus:outline-none focus:ring-2 focus:ring-[#00AAFF]"
                   />
                 </div>
-                <div className="bg-gray-50 rounded-xl p-3 grid grid-cols-4 gap-2 text-center text-xs">
-                  <div><p className="text-gray-400">Calories</p><p className="font-medium">{Math.round(searchSelected.calories * searchQty)}</p></div>
-                  <div><p className="text-gray-400">Protein</p><p className="font-medium">{Math.round(searchSelected.proteinG * searchQty)}g</p></div>
-                  <div><p className="text-gray-400">Carbs</p><p className="font-medium">{Math.round(searchSelected.carbsG * searchQty)}g</p></div>
-                  <div><p className="text-gray-400">Fat</p><p className="font-medium">{Math.round(searchSelected.fatG * searchQty)}g</p></div>
+                <div className="bg-[#1A1A1A] rounded-xl p-3 grid grid-cols-4 gap-2 text-center text-xs">
+                  <div><p className="text-[#665500]">Calories</p><p className="font-medium text-[#FFD700]">{Math.round(searchSelected.calories * searchQty)}</p></div>
+                  <div><p className="text-[#665500]">Protein</p><p className="font-medium text-[#FFD700]">{Math.round(searchSelected.proteinG * searchQty)}g</p></div>
+                  <div><p className="text-[#665500]">Carbs</p><p className="font-medium text-[#FFD700]">{Math.round(searchSelected.carbsG * searchQty)}g</p></div>
+                  <div><p className="text-[#665500]">Fat</p><p className="font-medium text-[#FFD700]">{Math.round(searchSelected.fatG * searchQty)}g</p></div>
                 </div>
                 <div className="flex gap-3">
-                  <button onClick={() => setSearchSelected(null)} className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 rounded-xl font-medium">
+                  <button onClick={() => setSearchSelected(null)} className="flex-1 bg-[#1E1E1E] hover:bg-[#2A2A2A] text-[#CCA800] py-3 rounded-xl font-medium">
                     Back
                   </button>
-                  <button onClick={handleSearchAdd} className="flex-1 bg-[#0066EE] hover:bg-[#0052BE] text-white font-semibold py-3 rounded-xl transition-colors">
+                  <button onClick={handleSearchAdd} className="flex-1 bg-[#00AAFF] hover:bg-[#0088DD] text-white font-semibold py-3 rounded-xl transition-colors">
                     Add to Diary
                   </button>
                 </div>
@@ -416,32 +416,32 @@ export default function FoodSearchModal({ mealType, onAdd, onClose }) {
         {activeTab === 'quickadd' && (
           <form onSubmit={handleQuickAdd} className="p-4 space-y-3 overflow-y-auto flex-1">
             <div>
-              <label className="text-sm text-gray-500 block mb-1">Food / Meal Name <span className="text-red-400">*</span></label>
+              <label className="text-sm text-[#997700] block mb-1">Food / Meal Name <span className="text-[#FF2233]">*</span></label>
               <input autoFocus type="text" value={qName} onChange={e => setQName(e.target.value)}
                 placeholder="e.g. Chicken sandwich" required
-                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0066EE]"
+                className="w-full bg-[#1A1A1A] border border-[#3D2E00] rounded-xl px-4 py-2.5 text-[#FFD700] placeholder:text-[#665500] focus:outline-none focus:ring-2 focus:ring-[#00AAFF]"
               />
             </div>
             <div>
-              <label className="text-sm text-gray-500 block mb-1">Calories <span className="text-red-400">*</span></label>
+              <label className="text-sm text-[#997700] block mb-1">Calories <span className="text-[#FF2233]">*</span></label>
               <input type="number" min="0" required value={qCal} onChange={e => setQCal(e.target.value)}
                 placeholder="e.g. 450"
-                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0066EE]"
+                className="w-full bg-[#1A1A1A] border border-[#3D2E00] rounded-xl px-4 py-2.5 text-[#FFD700] placeholder:text-[#665500] focus:outline-none focus:ring-2 focus:ring-[#00AAFF]"
               />
             </div>
-            <p className="text-xs text-gray-400 pt-1">Optional macros</p>
+            <p className="text-xs text-[#665500] pt-1">Optional macros</p>
             <div className="grid grid-cols-3 gap-2">
               {[['Protein (g)', qProtein, setQProtein], ['Carbs (g)', qCarbs, setQCarbs], ['Fat (g)', qFat, setQFat]].map(([label, val, set]) => (
                 <div key={label}>
-                  <label className="text-xs text-gray-500 block mb-1">{label}</label>
+                  <label className="text-xs text-[#997700] block mb-1">{label}</label>
                   <input type="number" min="0" step="0.1" value={val} onChange={e => set(e.target.value)} placeholder="0"
-                    className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#0066EE]"
+                    className="w-full bg-[#1A1A1A] border border-[#3D2E00] rounded-xl px-3 py-2 text-[#FFD700] placeholder:text-[#665500] text-sm focus:outline-none focus:ring-2 focus:ring-[#00AAFF]"
                   />
                 </div>
               ))}
             </div>
             <button type="submit" disabled={!qName || !qCal}
-              className="w-full bg-[#0066EE] hover:bg-[#0052BE] disabled:opacity-40 text-white font-semibold py-3 rounded-xl transition-colors mt-2">
+              className="w-full bg-[#00AAFF] hover:bg-[#0088DD] disabled:opacity-40 text-white font-semibold py-3 rounded-xl transition-colors mt-2">
               Add to Diary
             </button>
           </form>
@@ -454,26 +454,26 @@ export default function FoodSearchModal({ mealType, onAdd, onClose }) {
 
 function MealRow({ meal, onAdd, onDelete, onCustomise, showDelete }) {
   return (
-    <div className="bg-gray-50 rounded-xl px-3 py-2.5">
+    <div className="bg-[#1A1A1A] rounded-xl px-3 py-2.5">
       <div className="flex items-center justify-between gap-2">
         <div className="flex-1 min-w-0">
-          <p className="text-sm text-gray-900 truncate">{meal.name}</p>
-          <p className="text-xs text-gray-400">
+          <p className="text-sm text-[#FFD700] truncate">{meal.name}</p>
+          <p className="text-xs text-[#665500]">
             {meal.calories} kcal · P {meal.proteinG}g · C {meal.carbsG}g · F {meal.fatG}g
           </p>
         </div>
         <div className="flex items-center gap-1 flex-shrink-0">
           {showDelete && (
-            <button onClick={onDelete} className="text-gray-300 hover:text-red-400 text-lg leading-none px-1">×</button>
+            <button onClick={onDelete} className="text-[#665500] hover:text-[#FF2233] text-lg leading-none px-1">×</button>
           )}
           {onCustomise && (
             <button onClick={onCustomise}
-              className="border border-[#0066EE] text-[#0066EE] hover:bg-blue-50 text-xs font-medium px-2.5 py-1.5 rounded-lg transition-colors">
+              className="border border-[#00AAFF] text-[#00AAFF] hover:bg-[#001A2E] text-xs font-medium px-2.5 py-1.5 rounded-lg transition-colors">
               Customise
             </button>
           )}
           <button onClick={onAdd}
-            className="bg-[#0066EE] hover:bg-[#0052BE] text-white text-xs font-medium px-3 py-1.5 rounded-lg transition-colors">
+            className="bg-[#00AAFF] hover:bg-[#0088DD] text-white text-xs font-medium px-3 py-1.5 rounded-lg transition-colors">
             Add
           </button>
         </div>

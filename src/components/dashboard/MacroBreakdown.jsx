@@ -1,16 +1,16 @@
 const MACROS = [
-  { key: 'carbsG', label: 'Carbs', color: 'bg-yellow-400' },
-  { key: 'proteinG', label: 'Protein', color: 'bg-blue-400' },
-  { key: 'fatG', label: 'Fat', color: 'bg-orange-400' },
-  { key: 'fiberG', label: 'Fiber', color: 'bg-green-400' },
+  { key: 'carbsG', label: 'Carbs', color: 'bg-[#FFD700]' },
+  { key: 'proteinG', label: 'Protein', color: 'bg-[#00AAFF]' },
+  { key: 'fatG', label: 'Fat', color: 'bg-[#FF6600]' },
+  { key: 'fiberG', label: 'Fiber', color: 'bg-[#00FF66]' },
 ];
 
 export default function MacroBreakdown({ totals, targets, fiberTarget }) {
   const allTargets = { ...targets, fiberG: fiberTarget || 25 };
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm p-4">
-      <h2 className="text-sm font-medium text-gray-500 mb-3">Macros</h2>
+    <div className="bg-[#141414] rounded-2xl shadow-sm p-4">
+      <h2 className="text-sm font-medium text-[#997700] mb-3">Macros</h2>
       <div className="space-y-3">
         {MACROS.map(m => {
           const consumed = Math.round((totals[m.key] || 0) * 10) / 10;
@@ -19,10 +19,10 @@ export default function MacroBreakdown({ totals, targets, fiberTarget }) {
           return (
             <div key={m.key}>
               <div className="flex justify-between text-xs mb-1">
-                <span className="text-gray-700">{m.label}</span>
-                <span className="text-gray-400">{consumed}g / {target}g</span>
+                <span className="text-[#CCA800]">{m.label}</span>
+                <span className="text-[#665500]">{consumed}g / {target}g</span>
               </div>
-              <div className="w-full bg-gray-100 rounded-full h-2">
+              <div className="w-full bg-[#1E1E1E] rounded-full h-2">
                 <div className={`h-2 rounded-full ${m.color} transition-all`} style={{ width: `${pct}%` }} />
               </div>
             </div>

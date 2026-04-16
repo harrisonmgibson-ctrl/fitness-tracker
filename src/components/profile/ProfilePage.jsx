@@ -26,9 +26,9 @@ export default function ProfilePage() {
 
   return (
     <div className="pt-4 space-y-4">
-      <h1 className="text-xl font-bold text-gray-900">Profile</h1>
+      <h1 className="text-xl font-bold text-[#FFD700]">Profile</h1>
 
-      <div className="bg-white rounded-2xl shadow-sm p-4 space-y-2 text-sm">
+      <div className="bg-[#141414] rounded-2xl shadow-sm p-4 space-y-2 text-sm">
         <Row label="Age" value={`${profile.age} years`} />
         <Row label="Gender" value={profile.gender} />
         <Row label="Height" value={`${profile.heightCm} cm`} />
@@ -39,7 +39,7 @@ export default function ProfilePage() {
       </div>
 
       {goals && (
-        <div className="bg-white rounded-2xl shadow-sm p-4 space-y-2 text-sm">
+        <div className="bg-[#141414] rounded-2xl shadow-sm p-4 space-y-2 text-sm">
           <Row label="BMR" value={`${goals.bmr} kcal`} />
           <Row label="TDEE" value={`${goals.tdee} kcal`} />
           <Row label="Daily Calorie Goal" value={`${goals.calorieGoal} kcal`} highlight />
@@ -51,12 +51,12 @@ export default function ProfilePage() {
 
       <button
         onClick={() => navigate('/setup')}
-        className="w-full bg-gray-100 hover:bg-gray-200 text-gray-800 py-3 rounded-2xl font-medium transition-colors">
+        className="w-full bg-[#1E1E1E] hover:bg-[#2A2A2A] text-[#CCA800] py-3 rounded-2xl font-medium transition-colors">
         Edit Profile
       </button>
       <button
         onClick={handleReset}
-        className="w-full bg-transparent border border-red-300 hover:border-red-400 text-red-500 py-3 rounded-2xl font-medium transition-colors">
+        className="w-full bg-transparent border border-[#FF2233]/50 hover:border-[#FF2233] text-[#FF2233] py-3 rounded-2xl font-medium transition-colors">
         Reset All Data
       </button>
     </div>
@@ -66,8 +66,8 @@ export default function ProfilePage() {
 function Row({ label, value, highlight }) {
   return (
     <div className="flex justify-between">
-      <span className="text-gray-500">{label}</span>
-      <span className={highlight ? 'text-[#0066EE] font-semibold' : 'text-gray-800'}>{value}</span>
+      <span className="text-[#997700]">{label}</span>
+      <span className={highlight ? 'text-[#00AAFF] font-semibold' : 'text-[#FFD700]'}>{value}</span>
     </div>
   );
 }
