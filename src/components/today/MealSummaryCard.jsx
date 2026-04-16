@@ -10,7 +10,7 @@ const MEAL_LABELS = {
   snack: 'Snacks',
 };
 
-export default function MealSummaryCard({ mealType, entries, onAdd, onRemove }) {
+export default function MealSummaryCard({ mealType, entries, onAdd, onRemove, onEdit }) {
   const [showModal, setShowModal] = useState(false);
   const mealEntries = entries.filter(e => e.mealType === mealType);
   const total = sumEntries(mealEntries);
@@ -25,7 +25,7 @@ export default function MealSummaryCard({ mealType, entries, onAdd, onRemove }) 
         <p className="text-xs text-gray-400 px-4 py-2">No foods logged</p>
       )}
       {mealEntries.map(entry => (
-        <DiaryEntryRow key={entry.id} entry={entry} onRemove={onRemove} />
+        <DiaryEntryRow key={entry.id} entry={entry} onRemove={onRemove} onEdit={onEdit} />
       ))}
       <button
         onClick={() => setShowModal(true)}

@@ -16,7 +16,7 @@ function getYesterday() {
 
 export default function DiaryPage() {
   const [date, setDate] = useState(toISODate());
-  const { entries, addEntry, removeEntry, copyFromDate, dailyTotals } = useDiary(date);
+  const { entries, addEntry, removeEntry, updateEntryQuantity, copyFromDate, dailyTotals } = useDiary(date);
   const { profile } = useProfile();
   const goals = useGoals(profile);
 
@@ -60,6 +60,7 @@ export default function DiaryPage() {
           entries={entries}
           onAdd={addEntry}
           onRemove={removeEntry}
+          onEdit={updateEntryQuantity}
         />
       ))}
     </div>

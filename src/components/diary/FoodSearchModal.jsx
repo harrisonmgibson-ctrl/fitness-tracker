@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import foods from '../../data/foodDatabase';
 import preMeals from '../../data/mealDatabase';
 import { useSavedMeals } from '../../hooks/useSavedMeals';
+import { useRecents } from '../../hooks/useRecents';
 import MealCustomiser from './MealCustomiser';
 
 const TABS = [
@@ -17,6 +18,7 @@ const MEAL_LABEL = { breakfast: 'Breakfast', lunch: 'Lunch', dinner: 'Dinner', s
 export default function FoodSearchModal({ mealType, onAdd, onClose }) {
   const [activeTab, setActiveTab] = useState('build');
   const { meals: savedMeals, addMeal: saveToMyMeals, removeMeal } = useSavedMeals();
+  const { recents, pushRecent } = useRecents();
 
   // ── Build Meal state ─────────────────────────────────────────────────────────
   const [mealName, setMealName] = useState('');
@@ -109,7 +111,9 @@ export default function FoodSearchModal({ mealType, onAdd, onClose }) {
     : foods.slice(0, 30);
 
   function handleSearchAdd() {
-    if (searchSelected) onAdd(searchSelected, searchQty);
+    if (!searchSelected) return;
+    pushRecent(searchSelected);
+    onAdd(searchSelected, searchQty);
   }
 
   // ── Quick Add state ──────────────────────────────────────────────────────────
@@ -337,6 +341,32 @@ export default function FoodSearchModal({ mealType, onAdd, onClose }) {
 
             {!searchSelected ? (
               <ul className="overflow-y-auto flex-1">
+                {/* Recently used — shown when search is empty */}
+                {searchQuery === '' && recents.length > 0 && (
+                  <>
+                    <li className="px-4 pt-3 pb-1">
+                      <p className="text-xs font-medium text-gray-400 uppercase tracking-wide">Recently Used</p>
+                    </li>
+                    {recents.slice(0, 8).map(r => {
+                      const food = { id: r.foodId, name: r.foodName, servingUnit: r.servingUnit, servingSizeG: r.servingSizeG, calories: r.calories, proteinG: r.proteinG, carbsG: r.carbsG, fatG: r.fatG, fiberG: r.fiberG };
+                      return (
+                        <li key={r.foodId}>
+                          <button onClick={() => { setSearchSelected(food); setSearchQty(1); }}
+                            className="w-full flex justify-between items-center px-4 py-3 hover:bg-gray-50 border-b border-gray-50 text-left">
+                            <div>
+                              <p className="text-sm text-gray-900">{r.foodName}</p>
+                              <p className="text-xs text-gray-400">{r.servingUnit}</p>
+                            </div>
+                            <span className="text-sm text-gray-500">{r.calories} kcal</span>
+                          </button>
+                        </li>
+                      );
+                    })}
+                    <li className="px-4 pt-3 pb-1">
+                      <p className="text-xs font-medium text-gray-400 uppercase tracking-wide">All Foods</p>
+                    </li>
+                  </>
+                )}
                 {searchResults.map(food => (
                   <li key={food.id}>
                     <button onClick={() => { setSearchSelected(food); setSearchQty(1); }}

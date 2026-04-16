@@ -5,6 +5,7 @@ import { useWeightLog } from '../../hooks/useWeightLog';
 import MacroBreakdown from '../dashboard/MacroBreakdown';
 import WeeklyCalorieChart from '../dashboard/WeeklyCalorieChart';
 import WeeklySummaryCard from './WeeklySummaryCard';
+import WeightChart from './WeightChart';
 import { useDiary } from '../../hooks/useDiary';
 import { toISODate } from '../../lib/dateUtils';
 import { getAllDiary } from '../../lib/storage';
@@ -37,6 +38,8 @@ export default function ProgressPage() {
       <WeeklySummaryCard calorieGoal={goals.calorieGoal} />
       <WeeklyCalorieChart calorieGoal={goals.calorieGoal} />
       <MacroBreakdown totals={dailyTotals} targets={goals.macroTargets} fiberTarget={goals.fiberTarget} />
+
+      <WeightChart log={log} goalWeightKg={profile?.goalWeightKg ?? null} />
 
       <div className="bg-white rounded-2xl shadow-sm p-4">
         <h2 className="text-sm font-medium text-gray-500 mb-3">Log Weight</h2>

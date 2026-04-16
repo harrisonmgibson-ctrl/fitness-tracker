@@ -20,7 +20,7 @@ const MEALS = ['breakfast', 'lunch', 'dinner', 'snack'];
 
 export default function TodayPage() {
   const [date, setDate] = useState(toISODate());
-  const { entries, addEntry, removeEntry, dailyTotals } = useDiary(date);
+  const { entries, addEntry, removeEntry, updateEntryQuantity, dailyTotals } = useDiary(date);
   const { profile } = useProfile();
   const goals = useGoals(profile);
   const { log, addWeight } = useWeightLog();
@@ -54,6 +54,7 @@ export default function TodayPage() {
             entries={entries}
             onAdd={addEntry}
             onRemove={removeEntry}
+            onEdit={updateEntryQuantity}
           />
         ))}
 

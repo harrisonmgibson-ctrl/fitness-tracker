@@ -9,6 +9,7 @@ const KEYS = {
   REMINDER_DISMISSED: 'ft_reminder_dismissed',
   CUP_SIZE_ML: 'ft_cup_size_ml',
   BOTTLE_SIZE_ML: 'ft_bottle_size_ml',
+  RECENTS: 'ft_recents',
 };
 
 function safeGet(key, fallback) {
@@ -125,4 +126,13 @@ export function getReminderDismissed() {
 
 export function setReminderDismissed(isoDate) {
   safeSet(KEYS.REMINDER_DISMISSED, isoDate);
+}
+
+// Recents — array of recently used food items (capped at 20)
+export function getRecents() {
+  return safeGet(KEYS.RECENTS, []);
+}
+
+export function setRecents(list) {
+  safeSet(KEYS.RECENTS, list);
 }
