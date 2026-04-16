@@ -122,6 +122,7 @@ export default function FoodSearchModal({ mealType, onAdd, onClose }) {
   const [qProtein, setQProtein] = useState('');
   const [qCarbs, setQCarbs] = useState('');
   const [qFat, setQFat] = useState('');
+  const [qFiber, setQFiber] = useState('');
 
   function handleQuickAdd(e) {
     e.preventDefault();
@@ -135,6 +136,7 @@ export default function FoodSearchModal({ mealType, onAdd, onClose }) {
       proteinG: Number(qProtein) || 0,
       carbsG: Number(qCarbs) || 0,
       fatG: Number(qFat) || 0,
+      fiberG: Number(qFiber) || 0,
     }, 1);
   }
 
@@ -430,8 +432,8 @@ export default function FoodSearchModal({ mealType, onAdd, onClose }) {
               />
             </div>
             <p className="text-xs text-[#665500] pt-1">Optional macros</p>
-            <div className="grid grid-cols-3 gap-2">
-              {[['Protein (g)', qProtein, setQProtein], ['Carbs (g)', qCarbs, setQCarbs], ['Fat (g)', qFat, setQFat]].map(([label, val, set]) => (
+            <div className="grid grid-cols-4 gap-2">
+              {[['Protein (g)', qProtein, setQProtein], ['Carbs (g)', qCarbs, setQCarbs], ['Fat (g)', qFat, setQFat], ['Fiber (g)', qFiber, setQFiber]].map(([label, val, set]) => (
                 <div key={label}>
                   <label className="text-xs text-[#997700] block mb-1">{label}</label>
                   <input type="number" min="0" step="0.1" value={val} onChange={e => set(e.target.value)} placeholder="0"
