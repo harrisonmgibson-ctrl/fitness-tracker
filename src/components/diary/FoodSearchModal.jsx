@@ -37,7 +37,8 @@ export default function FoodSearchModal({ mealType, onAdd, onClose }) {
     proteinG: Math.round((acc.proteinG + food.proteinG * quantity) * 10) / 10,
     carbsG: Math.round((acc.carbsG + food.carbsG * quantity) * 10) / 10,
     fatG: Math.round((acc.fatG + food.fatG * quantity) * 10) / 10,
-  }), { calories: 0, proteinG: 0, carbsG: 0, fatG: 0 });
+    fiberG: Math.round((acc.fiberG + (food.fiberG || 0) * quantity) * 10) / 10,
+  }), { calories: 0, proteinG: 0, carbsG: 0, fatG: 0, fiberG: 0 });
 
   function addIngredient() {
     if (!ingSelected) return;

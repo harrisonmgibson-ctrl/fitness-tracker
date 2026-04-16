@@ -109,7 +109,7 @@ export default function WaterCard({ date }) {
               type="radio" name="waterOption" value="cup"
               checked={selected === 'cup'}
               onChange={() => setSelected('cup')}
-              className="accent-[#00AAFF]"
+              style={{ accentColor: '#00AAFF' }}
             />
             <span className="text-sm text-[#CCA800] flex-1">Cup</span>
             {editingCup ? (
@@ -144,7 +144,7 @@ export default function WaterCard({ date }) {
               type="radio" name="waterOption" value="bottle"
               checked={selected === 'bottle'}
               onChange={() => setSelected('bottle')}
-              className="accent-[#00AAFF]"
+              style={{ accentColor: '#00AAFF' }}
             />
             <span className="text-sm text-[#CCA800] flex-1">Bottle</span>
             {editingBottle ? (
@@ -179,7 +179,7 @@ export default function WaterCard({ date }) {
               type="radio" name="waterOption" value="exact"
               checked={selected === 'exact'}
               onChange={() => setSelected('exact')}
-              className="accent-[#00AAFF]"
+              style={{ accentColor: '#00AAFF' }}
             />
             <span className="text-sm text-[#CCA800]">Exact</span>
             <div className="flex items-center gap-1 flex-1">

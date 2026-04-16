@@ -31,12 +31,9 @@
 }
 
 body {
+  margin: 0;
   background: #0A0A0A;
   color: #FFD700;
-}
-
-body {
-  margin: 0;
 }
 
 #root {
