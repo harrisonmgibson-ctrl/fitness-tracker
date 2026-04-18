@@ -6,7 +6,7 @@ export default function NavBar() {
   const inactive = 'text-[#665500]';
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-[#0A0A0A] border-t border-[#3D2E00] flex justify-around z-10">
+    <nav className="fixed bottom-0 left-0 right-0 bg-[#0A0A0A] border-t border-[#3D2E00] flex justify-around z-10 pb-safe">
       <NavLink to="/" end className={({ isActive }) => `${base} ${isActive ? active : inactive}`}>
         <span className="text-xl">🏠</span>
         Today

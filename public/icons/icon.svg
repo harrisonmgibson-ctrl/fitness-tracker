@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Black rounded background -->
+  <rect width="512" height="512" rx="112" fill="#0A0A0A"/>
+  <!-- Gold outer arc ring -->
+  <circle cx="256" cy="256" r="180" fill="none" stroke="#FFD700" stroke-width="36"
+    stroke-linecap="round"
+    stroke-dasharray="848 283"
+    stroke-dashoffset="70"
+    transform="rotate(-90 256 256)"/>
+  <!-- Neon blue inner arc ring -->
+  <circle cx="256" cy="256" r="112" fill="none" stroke="#00AAFF" stroke-width="28"
+    stroke-linecap="round"
+    stroke-dasharray="388 316"
+    stroke-dashoffset="45"
+    transform="rotate(-90 256 256)"/>
+  <!-- Bold F lettermark -->
+  <text x="256" y="298" text-anchor="middle"
+    font-family="system-ui, -apple-system, sans-serif"
+    font-weight="900" font-size="148" fill="#FFD700">F</text>
+</svg>

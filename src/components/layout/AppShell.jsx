@@ -8,7 +8,7 @@ export default function AppShell() {
 
   return (
     <div className="min-h-screen bg-[#0A0A0A] text-[#FFD700]">
-      <main className="pb-24 max-w-lg mx-auto px-4">
+      <main className="pb-24 max-w-lg mx-auto px-4 pt-safe">
         <Outlet />
       </main>
 

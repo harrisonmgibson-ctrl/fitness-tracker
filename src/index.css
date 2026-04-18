@@ -36,6 +36,14 @@ body {
   color: #FFD700;
 }
 
+/* iPhone safe area support */
+.pt-safe {
+  padding-top: env(safe-area-inset-top);
+}
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
 #root {
   width: 1126px;
   max-width: 100%;
