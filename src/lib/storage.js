@@ -1,3 +1,5 @@
+import { get, set } from 'idb-keyval';
+
 const KEYS = {
   PROFILE: 'ft_profile',
   DIARY: 'ft_diary',
@@ -12,127 +14,150 @@ const KEYS = {
   RECENTS: 'ft_recents',
 };
 
-function safeGet(key, fallback) {
+async function safeGet(key, fallback) {
   try {
-    const raw = localStorage.getItem(key);
-    return raw ? JSON.parse(raw) : fallback;
+    const val = await get(key);
+    return val !== undefined ? val : fallback;
   } catch {
     return fallback;
   }
 }
 
-function safeSet(key, value) {
-  localStorage.setItem(key, JSON.stringify(value));
+async function safeSet(key, value) {
+  try {
+    await set(key, value);
+  } catch {
+    // ignore write errors
+  }
+}
+
+// One-time migration: copy any existing localStorage data into IndexedDB
+export async function migrateFromLocalStorage() {
+  try {
+    const already = await get('ft_idb_migrated');
+    if (already) return;
+    for (const key of Object.values(KEYS)) {
+      const raw = localStorage.getItem(key);
+      if (raw) {
+        try {
+          await set(key, JSON.parse(raw));
+        } catch {}
+      }
+    }
+    await set('ft_idb_migrated', true);
+  } catch {
+    // migration is best-effort
+  }
 }
 
 // Profile
-export function getProfile() {
+export async function getProfile() {
   return safeGet(KEYS.PROFILE, null);
 }
 
-export function setProfile(profile) {
-  safeSet(KEYS.PROFILE, profile);
+export async function setProfile(profile) {
+  await safeSet(KEYS.PROFILE, profile);
 }
 
 // Diary — stored as { 'YYYY-MM-DD': [entries] }
-export function getDiaryDay(isoDate) {
-  const all = safeGet(KEYS.DIARY, {});
+export async function getDiaryDay(isoDate) {
+  const all = await safeGet(KEYS.DIARY, {});
   return all[isoDate] || [];
 }
 
-export function setDiaryDay(isoDate, entries) {
-  const all = safeGet(KEYS.DIARY, {});
+export async function setDiaryDay(isoDate, entries) {
+  const all = await safeGet(KEYS.DIARY, {});
   all[isoDate] = entries;
-  safeSet(KEYS.DIARY, all);
+  await safeSet(KEYS.DIARY, all);
 }
 
-export function getAllDiary() {
+export async function getAllDiary() {
   return safeGet(KEYS.DIARY, {});
 }
 
 // Weight log — array of { id, date, weightKg }
-export function getWeightLog() {
+export async function getWeightLog() {
   return safeGet(KEYS.WEIGHT_LOG, []);
 }
 
-export function setWeightLog(log) {
-  safeSet(KEYS.WEIGHT_LOG, log);
+export async function setWeightLog(log) {
+  await safeSet(KEYS.WEIGHT_LOG, log);
 }
 
-// Saved meals — array of { id, name, calories, proteinG, carbsG, fatG }
-export function getSavedMeals() {
+// Saved meals
+export async function getSavedMeals() {
   return safeGet(KEYS.SAVED_MEALS, []);
 }
 
-export function setSavedMeals(meals) {
-  safeSet(KEYS.SAVED_MEALS, meals);
+export async function setSavedMeals(meals) {
+  await safeSet(KEYS.SAVED_MEALS, meals);
 }
 
 // Exercise — { 'YYYY-MM-DD': [{ id, name, caloriesBurned }] }
-export function getExerciseDay(isoDate) {
-  const all = safeGet(KEYS.EXERCISE, {});
+export async function getExerciseDay(isoDate) {
+  const all = await safeGet(KEYS.EXERCISE, {});
   return all[isoDate] || [];
 }
 
-export function setExerciseDay(isoDate, entries) {
-  const all = safeGet(KEYS.EXERCISE, {});
+export async function setExerciseDay(isoDate, entries) {
+  const all = await safeGet(KEYS.EXERCISE, {});
   all[isoDate] = entries;
-  safeSet(KEYS.EXERCISE, all);
+  await safeSet(KEYS.EXERCISE, all);
 }
 
 // Water — { 'YYYY-MM-DD': totalMl }
-export function getWaterDay(isoDate) {
-  const all = safeGet(KEYS.WATER, {});
+export async function getWaterDay(isoDate) {
+  const all = await safeGet(KEYS.WATER, {});
   return all[isoDate] ?? 0;
 }
 
-export function setWaterDay(isoDate, totalMl) {
-  const all = safeGet(KEYS.WATER, {});
+export async function setWaterDay(isoDate, totalMl) {
+  const all = await safeGet(KEYS.WATER, {});
   all[isoDate] = totalMl;
-  safeSet(KEYS.WATER, all);
+  await safeSet(KEYS.WATER, all);
 }
 
-// Water goal — number in ml (default 2000)
-export function getWaterGoal() {
+// Water goal
+export async function getWaterGoal() {
   return safeGet(KEYS.WATER_GOAL, 2000);
 }
 
-export function setWaterGoal(n) {
-  safeSet(KEYS.WATER_GOAL, n);
+export async function setWaterGoal(n) {
+  await safeSet(KEYS.WATER_GOAL, n);
 }
 
-// Cup size — ml (default 250)
-export function getCupSizeMl() {
+// Cup size
+export async function getCupSizeMl() {
   return safeGet(KEYS.CUP_SIZE_ML, 250);
 }
 
-export function setCupSizeMl(n) {
-  safeSet(KEYS.CUP_SIZE_ML, n);
+export async function setCupSizeMl(n) {
+  await safeSet(KEYS.CUP_SIZE_ML, n);
 }
 
-// Bottle size — ml (default 500)
-export function getBottleSizeMl() {
+// Bottle size
+export async function getBottleSizeMl() {
   return safeGet(KEYS.BOTTLE_SIZE_ML, 500);
 }
 
-export function setBottleSizeMl(n) {
-  safeSet(KEYS.BOTTLE_SIZE_ML, n);
+export async function setBottleSizeMl(n) {
+  await safeSet(KEYS.BOTTLE_SIZE_ML, n);
 }
 
-// Reminder dismissed — ISO date string
-export function getReminderDismissed() {
+// Reminder dismissed
+export async function getReminderDismissed() {
   return safeGet(KEYS.REMINDER_DISMISSED, null);
 }
 
-export function setReminderDismissed(isoDate) {
-  safeSet(KEYS.REMINDER_DISMISSED, isoDate);
+export async function setReminderDismissed(isoDate) {
+  await safeSet(KEYS.REMINDER_DISMISSED, isoDate);
 }
 
-// Recents — array of recently used food items (capped at 20)
-export function getRecents() {
+// Recents
+export async function getRecents() {
   return safeGet(KEYS.RECENTS, []);
 }
 
-export function setRecents(list) {
-  safeSet(KEYS.RECENTS, list);
+export async function setRecents(list) {
+  await safeSet(KEYS.RECENTS, list);
 }

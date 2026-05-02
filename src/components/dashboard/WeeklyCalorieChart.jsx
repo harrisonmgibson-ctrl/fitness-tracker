@@ -1,11 +1,16 @@
+import { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, ReferenceLine, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { last7Days, shortDayLabel, toISODate } from '../../lib/dateUtils';
 import { getAllDiary } from '../../lib/storage';
 import { sumEntries } from '../../lib/calculations';
 
 export default function WeeklyCalorieChart({ calorieGoal }) {
-  const diary = getAllDiary();
+  const [diary, setDiary] = useState({});
   const today = toISODate();
+
+  useEffect(() => {
+    getAllDiary().then(setDiary);
+  }, []);
 
   const data = last7Days().map(date => {
     const entries = diary[date] || [];

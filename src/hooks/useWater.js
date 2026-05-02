@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   getWaterDay, setWaterDay,
   getWaterGoal, setWaterGoal,
@@ -7,10 +7,20 @@ import {
 } from '../lib/storage';
 
 export function useWater(date) {
-  const [totalMl, setTotalMl] = useState(() => getWaterDay(date));
-  const [goalMl, setGoalMlState] = useState(() => getWaterGoal());
-  const [cupSizeMl, setCupSizeMlState] = useState(() => getCupSizeMl());
-  const [bottleSizeMl, setBottleSizeMlState] = useState(() => getBottleSizeMl());
+  const [totalMl, setTotalMl] = useState(0);
+  const [goalMl, setGoalMlState] = useState(2000);
+  const [cupSizeMl, setCupSizeMlState] = useState(250);
+  const [bottleSizeMl, setBottleSizeMlState] = useState(500);
+
+  useEffect(() => {
+    getWaterDay(date).then(setTotalMl);
+  }, [date]);
+
+  useEffect(() => {
+    getWaterGoal().then(setGoalMlState);
+    getCupSizeMl().then(setCupSizeMlState);
+    getBottleSizeMl().then(setBottleSizeMlState);
+  }, []);
 
   function addMl(n) {
     const next = Math.max(0, totalMl + n);

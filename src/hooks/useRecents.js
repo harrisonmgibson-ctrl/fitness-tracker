@@ -1,8 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { getRecents, setRecents } from '../lib/storage';
 
 export function useRecents() {
-  const [recents, setRecentsState] = useState(() => getRecents());
+  const [recents, setRecentsState] = useState([]);
+
+  useEffect(() => {
+    getRecents().then(setRecentsState);
+  }, []);
 
   function pushRecent(food) {
     const item = {

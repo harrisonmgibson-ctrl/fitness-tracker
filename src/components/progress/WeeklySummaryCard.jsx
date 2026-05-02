@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { getAllDiary } from '../../lib/storage';
 import { sumEntries } from '../../lib/calculations';
 import { toISODate } from '../../lib/dateUtils';
@@ -17,9 +18,13 @@ function shortDay(isoDate) {
 }
 
 export default function WeeklySummaryCard({ calorieGoal }) {
-  const allDiary = getAllDiary();
+  const [allDiary, setAllDiary] = useState({});
   const today = toISODate();
   const days = getLastNDays(7);
+
+  useEffect(() => {
+    getAllDiary().then(setAllDiary);
+  }, []);
 
   const rows = days.map(date => {
     const entries = allDiary[date] || [];

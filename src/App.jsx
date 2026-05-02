@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { getProfile } from './lib/storage';
 import AppShell from './components/layout/AppShell';
@@ -9,7 +10,15 @@ import MorePage from './components/more/MorePage';
 import ProfilePage from './components/profile/ProfilePage';
 
 function RequireProfile({ children }) {
-  return getProfile() ? children : <Navigate to="/setup" replace />;
+  const [status, setStatus] = useState('loading');
+
+  useEffect(() => {
+    getProfile().then(p => setStatus(p ? 'ok' : 'missing'));
+  }, []);
+
+  if (status === 'loading') return null;
+  if (status === 'missing') return <Navigate to="/setup" replace />;
+  return children;
 }
 
 export default function App() {

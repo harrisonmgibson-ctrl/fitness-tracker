@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useProfile } from '../../hooks/useProfile';
 import { useGoals } from '../../hooks/useGoals';
 import { useWeightLog } from '../../hooks/useWeightLog';
@@ -17,6 +17,11 @@ export default function ProgressPage() {
   const { dailyTotals } = useDiary(toISODate());
   const { log, addWeight } = useWeightLog();
   const [weightInput, setWeightInput] = useState('');
+  const [allDiary, setAllDiary] = useState({});
+
+  useEffect(() => {
+    getAllDiary().then(setAllDiary);
+  }, []);
 
   if (!goals) return null;
 
@@ -29,7 +34,7 @@ export default function ProgressPage() {
   }
 
   const latestWeight = log[0];
-  const adaptiveTDEE = calcAdaptiveTDEE(log, getAllDiary(), goals.tdee);
+  const adaptiveTDEE = calcAdaptiveTDEE(log, allDiary, goals.tdee);
 
   return (
     <div className="pt-4 space-y-4">

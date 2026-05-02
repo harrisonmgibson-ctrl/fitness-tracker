@@ -1,9 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { getDiaryDay, setDiaryDay } from '../lib/storage';
 import { sumEntries } from '../lib/calculations';
 
 export function useDiary(date) {
-  const [entries, setEntries] = useState(() => getDiaryDay(date));
+  const [entries, setEntries] = useState([]);
+
+  useEffect(() => {
+    getDiaryDay(date).then(setEntries);
+  }, [date]);
 
   function addEntry(mealType, foodItem, quantity) {
     const newEntry = {
@@ -60,8 +64,8 @@ export function useDiary(date) {
     setEntries(updated);
   }
 
-  function copyFromDate(fromDate) {
-    const source = getDiaryDay(fromDate);
+  async function copyFromDate(fromDate) {
+    const source = await getDiaryDay(fromDate);
     if (!source.length) return;
     const copied = source.map(e => ({ ...e, id: crypto.randomUUID() }));
     setDiaryDay(date, copied);

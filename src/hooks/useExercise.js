@@ -1,8 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { getExerciseDay, setExerciseDay } from '../lib/storage';
 
 export function useExercise(date) {
-  const [entries, setEntries] = useState(() => getExerciseDay(date));
+  const [entries, setEntries] = useState([]);
+
+  useEffect(() => {
+    getExerciseDay(date).then(setEntries);
+  }, [date]);
 
   function addExercise({ name, caloriesBurned }) {
     const newEntry = { id: crypto.randomUUID(), name, caloriesBurned: Number(caloriesBurned) };

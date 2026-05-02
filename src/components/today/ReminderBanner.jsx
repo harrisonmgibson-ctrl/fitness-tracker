@@ -1,10 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { toISODate } from '../../lib/dateUtils';
 import { getReminderDismissed, setReminderDismissed } from '../../lib/storage';
 
 export default function ReminderBanner({ entryCount }) {
   const today = toISODate();
-  const [dismissed, setDismissed] = useState(() => getReminderDismissed() === today);
+  const [dismissed, setDismissed] = useState(false);
+
+  useEffect(() => {
+    getReminderDismissed().then(val => {
+      if (val === today) setDismissed(true);
+    });
+  }, [today]);
 
   const hour = new Date().getHours();
   const shouldShow = hour >= 13 && entryCount === 0 && !dismissed;

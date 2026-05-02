@@ -1,8 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { getSavedMeals, setSavedMeals } from '../lib/storage';
 
 export function useSavedMeals() {
-  const [meals, setMeals] = useState(() => getSavedMeals());
+  const [meals, setMeals] = useState([]);
+
+  useEffect(() => {
+    getSavedMeals().then(setMeals);
+  }, []);
 
   function addMeal(meal) {
     const newMeal = { ...meal, id: `saved_${crypto.randomUUID()}` };

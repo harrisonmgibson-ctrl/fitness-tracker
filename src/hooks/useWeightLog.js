@@ -1,9 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { getWeightLog, setWeightLog as saveLog } from '../lib/storage';
 import { toISODate } from '../lib/dateUtils';
 
 export function useWeightLog() {
-  const [log, setLog] = useState(() => getWeightLog());
+  const [log, setLog] = useState([]);
+
+  useEffect(() => {
+    getWeightLog().then(setLog);
+  }, []);
 
   function addWeight(weightKg, date = toISODate()) {
     const filtered = log.filter((e) => e.date !== date);
